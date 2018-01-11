@@ -17,7 +17,7 @@ namespace WinForm.UI.Forms
 
         #region 自定义属性
 
-        private static Builder builder = FormsManager.Builder;
+        private static Style builder = FormsManager.Style;
 
 
         private bool dragSize = builder.DragSize;

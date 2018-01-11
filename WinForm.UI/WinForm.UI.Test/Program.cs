@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,6 +16,11 @@ namespace WinForm.UI.Test
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Style style= FormsManager.Style;
+            style.TitleBackColor = Color.FromArgb(27, 123, 210);
+
+
             Application.Run(new MainForm());
         }
     }

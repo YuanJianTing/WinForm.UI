@@ -14,7 +14,7 @@ namespace WinForm.UI
     * 说明：
     * ==========================================================
     * */
-    public class Builder
+    public class Style
     {
         private Font defauleFont = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, (134));
         /// <summary>

@@ -14,18 +14,18 @@ namespace WinForm.UI
     * */
     public class FormsManager
     {
-        private static Builder builder;
+        private static Style style;
 
-        public static Builder Builder
+        public static Style Style
         {
             get
             {
-                if (builder == null)
-                    builder = new Builder();
-                return builder;
+                if (style == null)
+                    style = new Style();
+                return style;
 
             }
-            set { builder = value; }
+            set { style = value; }
         }
 
 
