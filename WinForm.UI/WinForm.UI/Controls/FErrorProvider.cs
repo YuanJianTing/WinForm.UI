@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -19,6 +20,9 @@ namespace WinForm.UI.Controls
     * */
     public class FErrorProvider : Control
     {
+
+        private Timer timer = null;
+
         public FErrorProvider()
         {
             SetStyle(
@@ -31,20 +35,103 @@ namespace WinForm.UI.Controls
             //强制分配样式重新应用到控件上
             UpdateStyles();
 
-            this.Size = new Size(75, 23);
+            base.Size = new Size(160, 40);
+            base.MinimumSize = new Size(160, 40);
             base.BackColor = Color.Transparent;
             base.ForeColor = Color.White;
+            base.Margin = new Padding(0, 0, 0, 0);
+            base.Visible = false;
+            base.Location = new Point(-50,-50);
+            timer = new Timer();
+            timer.Enabled = false;
+            timer.Interval = 4000;
+            timer.Tick += Timer_Tick;
         }
 
+        
+
+        #region 隐藏父容器控件
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new string Text { get { return base.Text; } }
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Size Size { get { return base.Size; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool Visible { get { return base.Visible; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new int TabIndex { get { return base.TabIndex; } }
 
-        private Color backColor = Color.FromArgb(62, 194, 46);
-        public new Color BackColor { get { return backColor; } set { backColor = value; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool TabStop { get { return base.TabStop; } }
 
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool UseWaitCursor { get { return base.UseWaitCursor; } }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new RightToLeft RightToLeft { get { return base.RightToLeft; } }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Padding Padding { get { return base.Padding; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Padding Margin { get { return base.Margin; } }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new ImeMode ImeMode { get { return base.ImeMode; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Point Location { get { return base.Location; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new DockStyle Dock { get { return base.Dock; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Image BackgroundImage { get { return base.BackgroundImage; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new ImageLayout BackgroundImageLayout { get { return base.BackgroundImageLayout; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new bool Enabled { get { return base.Enabled; } }
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Cursor Cursor { get { return base.Cursor; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new AnchorStyles Anchor { get { return base.Anchor; } }
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new ContextMenuStrip ContextMenuStrip { get { return base.ContextMenuStrip; } }
+
+        #endregion
 
         /// <summary>
         /// 三角形宽
@@ -56,7 +143,11 @@ namespace WinForm.UI.Controls
         private int TriangleHeight = 20;
         private Control Owner;
         private ErrorAlignment errorAlignment = ErrorAlignment.Right;
-
+        private Color backColor = Color.FromArgb(62, 194, 46);
+        [Category("Skin")]
+        [Description("获取或设置当前控件的背景色")]
+        [DefaultValue(typeof(ErrorAlignment), "1")]
+        public new Color BackColor { get { return backColor; } set { backColor = value; } }
         [Category("Skin")]
         [Description("获取或设置当前控件相对位置")]
         [DefaultValue(typeof(ErrorAlignment), "1")]
@@ -76,8 +167,12 @@ namespace WinForm.UI.Controls
             set { if (message == value) return; message = value; this.Invalidate(); }
         }
 
+        
+
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (!base.Visible)
+                return;
             //base.OnPaint(e);
             Graphics g = e.Graphics;
             Rectangle rect = Rectangle.Empty;
@@ -193,19 +288,33 @@ namespace WinForm.UI.Controls
             }
         }
 
-        public void SetError(Control control, string message)
+        public void SetError(Control control, string message,int Time=4000)
         {
+            if (base.Visible)
+                return;
+
             this.Owner = control;
             InitSize(message);
             InitLocation();
+            base.Visible = true;
+            if (this.FindForm() == null)
+            {
+                Form form = control.FindForm();
+                form.Controls.Add(this);
+            }
+            timer.Interval = Time;
+            timer.Start();
         }
 
         private void InitSize(string message)
         {
+            this.message = message;
             Graphics g = CreateGraphics();
             SizeF size = g.MeasureString(message, this.Font);
-            if (size.Height > 23)
+            if (size.Height > 40)
                 this.Height = Convert.ToInt32(size.Height + 10);
+
+
         }
 
 
@@ -213,8 +322,37 @@ namespace WinForm.UI.Controls
         {
             Point point = Owner.Location;
             int x = 0, y = 0;
+            switch (errorAlignment)
+            {
+                case ErrorAlignment.Top:
+                    this.Height = this.Height + TriangleHeight;
+                    x = point.X;
+                    y = point.Y - this.Height;
+                    break;
+                case ErrorAlignment.Right:
+                    x = point.X + Owner.Width + 5;
+                    y = point.Y - 5;
+                    break;
+                case ErrorAlignment.Left:
+                    x = point.X - this.Width;
+                    y = point.Y - 5;
+                    break;
+                case ErrorAlignment.Bottom:
+                    this.Height = this.Height + TriangleHeight;
+                    x = point.X;
+                    y = point.Y + Owner.Height;
+                    break;
+                default:
+                    break;
+            }
+            base.Location = new Point(x, y);
+        }
 
-            this.Location = new Point(x, y);
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            base.Visible = false;
+            timer.Stop();
         }
     }
 }
