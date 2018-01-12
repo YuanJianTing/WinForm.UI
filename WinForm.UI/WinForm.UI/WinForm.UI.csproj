@@ -46,6 +46,9 @@
     <Compile Include="Controls\CirclePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\FErrorProvider.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SimpleObjectAdapter.cs" />
     <Compile Include="Forms\DialogForm.cs">
       <SubType>Form</SubType>

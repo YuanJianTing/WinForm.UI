@@ -28,15 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.fButton1 = new WinForm.UI.Controls.FButton();
             this.fButton2 = new WinForm.UI.Controls.FButton();
             this.fTextBox1 = new WinForm.UI.Controls.FTextBox();
             this.fButton3 = new WinForm.UI.Controls.FButton();
             this.fButton4 = new WinForm.UI.Controls.FButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.fErrorProvider1 = new WinForm.UI.Controls.FErrorProvider();
+            this.fTextBox2 = new WinForm.UI.Controls.FTextBox();
+            this.fErrorProvider2 = new WinForm.UI.Controls.FErrorProvider();
+            this.fErrorProvider3 = new WinForm.UI.Controls.FErrorProvider();
+            this.fTextBox3 = new WinForm.UI.Controls.FTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // fButton1
@@ -67,7 +73,7 @@
             // 
             // fTextBox1
             // 
-            this.fTextBox1.Location = new System.Drawing.Point(291, 71);
+            this.fTextBox1.Location = new System.Drawing.Point(282, 71);
             this.fTextBox1.Name = "fTextBox1";
             this.fTextBox1.Size = new System.Drawing.Size(178, 26);
             this.fTextBox1.TabIndex = 2;
@@ -99,30 +105,80 @@
             this.fButton4.Text = "Toast";
             this.fButton4.Click += new System.EventHandler(this.fButton4_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(368, 185);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
             // circlePictureBox1
             // 
             this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
-            this.circlePictureBox1.Location = new System.Drawing.Point(527, 167);
+            this.circlePictureBox1.Location = new System.Drawing.Point(671, 41);
             this.circlePictureBox1.Name = "circlePictureBox1";
-            this.circlePictureBox1.Size = new System.Drawing.Size(200, 182);
+            this.circlePictureBox1.Size = new System.Drawing.Size(149, 149);
+            this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.circlePictureBox1.TabIndex = 6;
             this.circlePictureBox1.TabStop = false;
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // fErrorProvider1
+            // 
+            this.fErrorProvider1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(194)))), ((int)(((byte)(46)))));
+            this.fErrorProvider1.Error = "请输入人手机号码";
+            this.fErrorProvider1.ForeColor = System.Drawing.Color.White;
+            this.fErrorProvider1.Location = new System.Drawing.Point(466, 67);
+            this.fErrorProvider1.Name = "fErrorProvider1";
+            this.fErrorProvider1.Size = new System.Drawing.Size(163, 51);
+            this.fErrorProvider1.TabIndex = 7;
+            // 
+            // fTextBox2
+            // 
+            this.fTextBox2.Location = new System.Drawing.Point(488, 245);
+            this.fTextBox2.Name = "fTextBox2";
+            this.fTextBox2.Size = new System.Drawing.Size(178, 26);
+            this.fTextBox2.TabIndex = 8;
+            this.fTextBox2.WatermarkText = "请输入手机号";
+            // 
+            // fErrorProvider2
+            // 
+            this.fErrorProvider2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(194)))), ((int)(((byte)(46)))));
+            this.fErrorProvider2.Error = "请输入人手机号码";
+            this.fErrorProvider2.ErrorAlignment = WinForm.UI.Controls.ErrorAlignment.Left;
+            this.fErrorProvider2.ForeColor = System.Drawing.Color.White;
+            this.fErrorProvider2.Location = new System.Drawing.Point(254, 235);
+            this.fErrorProvider2.Name = "fErrorProvider2";
+            this.fErrorProvider2.Size = new System.Drawing.Size(228, 48);
+            this.fErrorProvider2.TabIndex = 9;
+            // 
+            // fErrorProvider3
+            // 
+            this.fErrorProvider3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(194)))), ((int)(((byte)(46)))));
+            this.fErrorProvider3.Error = "请输入人手机号码";
+            this.fErrorProvider3.ErrorAlignment = WinForm.UI.Controls.ErrorAlignment.Bottom;
+            this.fErrorProvider3.ForeColor = System.Drawing.Color.White;
+            this.fErrorProvider3.Location = new System.Drawing.Point(427, 366);
+            this.fErrorProvider3.Name = "fErrorProvider3";
+            this.fErrorProvider3.Size = new System.Drawing.Size(179, 72);
+            this.fErrorProvider3.TabIndex = 11;
+            // 
+            // fTextBox3
+            // 
+            this.fTextBox3.Location = new System.Drawing.Point(408, 334);
+            this.fTextBox3.Name = "fTextBox3";
+            this.fTextBox3.Size = new System.Drawing.Size(178, 26);
+            this.fTextBox3.TabIndex = 10;
+            this.fTextBox3.WatermarkText = "请输入手机号";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
+            this.Controls.Add(this.fErrorProvider3);
+            this.Controls.Add(this.fTextBox3);
+            this.Controls.Add(this.fErrorProvider2);
+            this.Controls.Add(this.fTextBox2);
+            this.Controls.Add(this.fErrorProvider1);
             this.Controls.Add(this.circlePictureBox1);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.fButton4);
             this.Controls.Add(this.fButton3);
             this.Controls.Add(this.fTextBox1);
@@ -131,8 +187,8 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -145,8 +201,13 @@
         private Controls.FTextBox fTextBox1;
         private Controls.FButton fButton3;
         private Controls.FButton fButton4;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private Controls.CirclePictureBox circlePictureBox1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private Controls.FErrorProvider fErrorProvider1;
+        private Controls.FTextBox fTextBox2;
+        private Controls.FErrorProvider fErrorProvider2;
+        private Controls.FErrorProvider fErrorProvider3;
+        private Controls.FTextBox fTextBox3;
     }
 }
 

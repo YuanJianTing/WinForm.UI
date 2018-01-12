@@ -38,7 +38,10 @@ namespace WinForm.UI.Test
 
         private void fButton4_Click(object sender, EventArgs e)
         {
-            Toast.MakeText(this, "呵呵哒").Show();
+            //errorProvider1.SetIconAlignment
+            errorProvider1.SetError(this.fTextBox1,"XXXXXXXXX");
+
+            //Toast.MakeText(this, "呵呵哒").Show();
         }
     }
 }

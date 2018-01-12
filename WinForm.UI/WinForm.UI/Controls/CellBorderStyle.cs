@@ -18,4 +18,26 @@ namespace WinForm.UI.Controls
         FixedSingle = 1,
         Dot = 2
     }
+
+    public enum ErrorAlignment
+    {
+        //
+        // 摘要:
+        //     图标显得与控件的顶部和控件的左边对齐。
+        Top = 0,
+        //
+        // 摘要:
+        //     图标显得与控件的顶部和控件的右边对齐。
+        Right = 1,
+        //
+        // 摘要:
+        //     图标显得与控件的中间和控件的左边对齐。
+        Left = 2,
+        //
+        // 摘要:
+        //     图标显得与控件的底部和控件的右边对齐。
+        Bottom = 5
+    }
+
 }
+

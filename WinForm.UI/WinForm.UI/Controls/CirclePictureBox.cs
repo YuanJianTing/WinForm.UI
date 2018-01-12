@@ -24,12 +24,16 @@ namespace WinForm.UI.Controls
         {
             Graphics g= pe.Graphics;
 
-            if (Image != null)
-            {
-                DrowImage(g);
-            }
+            Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
+            GraphicsPath path = GraphicsPathHelper.CreatePath(rect, 10, RoundStyle.All, true);
+            g.SetClip(path);
 
-            //base.OnPaint(pe);
+            //if (Image != null)
+            //{
+            //    DrowImage(g);
+            //}
+
+            base.OnPaint(pe);
         }
 
         private void DrowImage(Graphics g)

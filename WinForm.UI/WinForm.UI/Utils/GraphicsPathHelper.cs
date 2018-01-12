@@ -47,6 +47,38 @@ namespace WinForm.UI.Utils
             g.FillPath(myLinearGradientBrush, DrawRoundRect(rectangle.X, rectangle.Y, rectangle.Width - span, rectangle.Height - 1, _radius));
         }
 
+
+        /// <summary>
+        /// 绘制圆角矩形
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="g"></param>
+        /// <param name="_radius">圆的度数</param>
+        /// <param name="cusp">画不画尖角</param>
+        /// <param name="back_color">渐变色的起始</param>
+        public static void Draw(Rectangle rectangle, Graphics g, int _radius, bool cusp, Color back_color)
+        {
+            int span = 2;
+            //抗锯齿
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+            using (Brush hrush = new SolidBrush(back_color))
+            {
+                //画尖角
+                if (cusp)
+                {
+                    span = 10;
+                    PointF p1 = new PointF(rectangle.Width - 12, rectangle.Y + 10);
+                    PointF p2 = new PointF(rectangle.Width - 12, rectangle.Y + 30);
+                    PointF p3 = new PointF(rectangle.Width, rectangle.Y + 20);
+                    PointF[] ptsArray = { p1, p2, p3 };
+                    g.FillPolygon(hrush, ptsArray);
+                }
+                //填充
+                g.FillPath(hrush, DrawRoundRect(rectangle.X, rectangle.Y, rectangle.Width - span, rectangle.Height - 1, _radius));
+            }
+        }
+
+
         public static GraphicsPath DrawRoundRect(int x, int y, int width, int height, int radius)
         {
             //四边圆角
