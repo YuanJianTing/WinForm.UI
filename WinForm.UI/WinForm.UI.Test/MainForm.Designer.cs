@@ -31,6 +31,12 @@
             this.fButton1 = new WinForm.UI.Controls.FButton();
             this.fButton2 = new WinForm.UI.Controls.FButton();
             this.fTextBox1 = new WinForm.UI.Controls.FTextBox();
+            this.fButton3 = new WinForm.UI.Controls.FButton();
+            this.fButton4 = new WinForm.UI.Controls.FButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // fButton1
@@ -67,17 +73,66 @@
             this.fTextBox1.TabIndex = 2;
             this.fTextBox1.WatermarkText = "请输入手机号";
             // 
+            // fButton3
+            // 
+            this.fButton3.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton3.EndBackColor = System.Drawing.Color.Black;
+            this.fButton3.ForeColor = System.Drawing.Color.White;
+            this.fButton3.Location = new System.Drawing.Point(26, 129);
+            this.fButton3.Name = "fButton3";
+            this.fButton3.Size = new System.Drawing.Size(98, 36);
+            this.fButton3.TabIndex = 3;
+            this.fButton3.Text = "Dialog";
+            this.fButton3.Click += new System.EventHandler(this.fButton3_Click);
+            // 
+            // fButton4
+            // 
+            this.fButton4.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton4.EndBackColor = System.Drawing.Color.Black;
+            this.fButton4.ForeColor = System.Drawing.Color.White;
+            this.fButton4.Location = new System.Drawing.Point(151, 129);
+            this.fButton4.Name = "fButton4";
+            this.fButton4.Size = new System.Drawing.Size(98, 36);
+            this.fButton4.TabIndex = 4;
+            this.fButton4.Text = "Toast";
+            this.fButton4.Click += new System.EventHandler(this.fButton4_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(368, 185);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 5;
+            this.pictureBox1.TabStop = false;
+            // 
+            // circlePictureBox1
+            // 
+            this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
+            this.circlePictureBox1.Location = new System.Drawing.Point(527, 167);
+            this.circlePictureBox1.Name = "circlePictureBox1";
+            this.circlePictureBox1.Size = new System.Drawing.Size(200, 182);
+            this.circlePictureBox1.TabIndex = 6;
+            this.circlePictureBox1.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(832, 513);
+            this.Controls.Add(this.circlePictureBox1);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.fButton4);
+            this.Controls.Add(this.fButton3);
             this.Controls.Add(this.fTextBox1);
             this.Controls.Add(this.fButton2);
             this.Controls.Add(this.fButton1);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -88,6 +143,10 @@
         private Controls.FButton fButton1;
         private Controls.FButton fButton2;
         private Controls.FTextBox fTextBox1;
+        private Controls.FButton fButton3;
+        private Controls.FButton fButton4;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private Controls.CirclePictureBox circlePictureBox1;
     }
 }
 

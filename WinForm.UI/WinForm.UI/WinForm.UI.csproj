@@ -43,7 +43,16 @@
   <ItemGroup>
     <Compile Include="Animations\Animation.cs" />
     <Compile Include="Animations\DefaultAnimation.cs" />
+    <Compile Include="Controls\CirclePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SimpleObjectAdapter.cs" />
+    <Compile Include="Forms\DialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DialogForm.Designer.cs">
+      <DependentUpon>DialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Style.cs" />
     <Compile Include="Controls\Adapter.cs" />
     <Compile Include="Controls\BaseAdapter.cs" />
@@ -100,6 +109,9 @@
     <EmbeddedResource Include="Forms\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DialogForm.resx">
+      <DependentUpon>DialogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -107,6 +119,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\main_light_bkg_top123.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Doubt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exclamation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

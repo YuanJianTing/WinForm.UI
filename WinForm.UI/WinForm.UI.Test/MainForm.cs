@@ -20,7 +20,7 @@ namespace WinForm.UI.Test
 
         private void fButton1_Click(object sender, EventArgs e)
         {
-            //Toast.MakeText(this, "呵呵的").Show();
+            
             ListViewForm form = new ListViewForm();
             form.Show();
         }
@@ -29,6 +29,16 @@ namespace WinForm.UI.Test
         {
             TableForm form = new TableForm();
             form.Show();
+        }
+
+        private void fButton3_Click(object sender, EventArgs e)
+        {
+            DialogForm.Show("呵呵哒","提示",MessageFormIcon.OK,MessageFormButtons.OK);
+        }
+
+        private void fButton4_Click(object sender, EventArgs e)
+        {
+            Toast.MakeText(this, "呵呵哒").Show();
         }
     }
 }
