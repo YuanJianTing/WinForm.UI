@@ -50,5 +50,8 @@ namespace WinForm.UI.Animations
 
             IsClose = true;
         }
+
+       
+
     }
 }

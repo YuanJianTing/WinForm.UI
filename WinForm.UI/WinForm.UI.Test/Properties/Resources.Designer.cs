@@ -79,5 +79,15 @@ namespace WinForm.UI.Test.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap main_light_bkg_top123 {
+            get {
+                object obj = ResourceManager.GetObject("main_light_bkg_top123", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

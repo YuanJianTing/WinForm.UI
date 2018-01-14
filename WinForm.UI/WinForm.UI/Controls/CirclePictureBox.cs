@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -20,12 +21,18 @@ namespace WinForm.UI.Controls
     public class CirclePictureBox: PictureBox
     {
 
+        private int radius = 10;
+        [Category("Skin")]
+        [Description("获取或设置当前控件圆角的弧度")]
+        [DefaultValue(typeof(int), "10")]
+        public int Radius { get { return radius; } set { if (value == radius) return; radius = value; this.Invalidate(); } }
+
         protected override void OnPaint(PaintEventArgs pe)
         {
             Graphics g= pe.Graphics;
 
             Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
-            GraphicsPath path = GraphicsPathHelper.CreatePath(rect, 10, RoundStyle.All, true);
+            GraphicsPath path = GraphicsPathHelper.CreatePath(rect, radius, RoundStyle.All, true);
             g.SetClip(path);
 
             //if (Image != null)

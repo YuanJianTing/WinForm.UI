@@ -19,7 +19,8 @@ namespace WinForm.UI.Test
 
             Style style= FormsManager.Style;
             style.TitleBackColor = Color.FromArgb(27, 123, 210);
-
+            style.MinBoxBackColor = Color.FromArgb(70, Color.White);
+            style.MaxBoxBackColor = Color.FromArgb(70, Color.White);
 
             Application.Run(new MainForm());
         }

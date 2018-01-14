@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -235,7 +236,9 @@ namespace WinForm.UI.Forms
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            e.Graphics.Clear(BackColor);
+            //e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
+            //base.OnPaint(e);
             if (IsTitle)
             {
                 DrawTitle(e.Graphics);
@@ -270,10 +273,11 @@ namespace WinForm.UI.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (builder.Icon == null)
-                return;
-            this.Icon = builder.Icon;
-            if (!DesignMode)
+            if (builder.Icon != null)
+            {
+                this.Icon = builder.Icon;
+            }
+            if (!DesignMode && animation == null)
             {
                 animation = builder.Animation;
                 animation.SetForm(this);
@@ -431,19 +435,24 @@ namespace WinForm.UI.Forms
             Brush minBoxFontBrush = new SolidBrush(minBoxFontColor);
             Brush closeBoxFontBrush = new SolidBrush(closeBoxFontColor);
             Brush closeBoxFontDownBrush = new SolidBrush(Color.White);
+            StringFormat format = new StringFormat();
+            format.LineAlignment = StringAlignment.Center;
+            format.Alignment = StringAlignment.Center;
+
             if (_buttonState == ButtonState.XDown && ControlBox)
-                g.DrawString("X", font, closeBoxFontDownBrush, new Point(_xButtonBounds.Location.X + 8, 5));
+                g.DrawString("X", font, closeBoxFontDownBrush, _xButtonBounds, format);
             else
-                g.DrawString("X", font, closeBoxFontBrush, new Point(_xButtonBounds.Location.X + 8, 5));
+                g.DrawString("X", font, closeBoxFontBrush, _xButtonBounds, format);
 
             if (showMax)
             {
-                g.DrawString("口", font, maxBoxFontBrush, new Point(_maxButtonBounds.Location.X + 8, 5));
+                g.DrawString("口", font, maxBoxFontBrush, _maxButtonBounds, format);
                 if (showMin)
-                    g.DrawString("一", font, minBoxFontBrush, new Point(_minButtonBounds.Location.X + 8, 5));
+                    g.DrawString("一", font, minBoxFontBrush, _minButtonBounds, format);
+
             }
             else if (showMin)
-                g.DrawString("一", font, minBoxFontBrush, new Point(_maxButtonBounds.Location.X + 8, 5));
+                g.DrawString("一", font, minBoxFontBrush, _maxButtonBounds, format);
 
             maxBoxFontBrush.Dispose();
             minBoxFontBrush.Dispose();
@@ -489,6 +498,7 @@ namespace WinForm.UI.Forms
             else
             {
                 this.MaximumSize = new Size(Screen.PrimaryScreen.WorkingArea.Width, Screen.PrimaryScreen.WorkingArea.Height);
+
                 this.WindowState = FormWindowState.Maximized;
                 _maximized = true;
             }

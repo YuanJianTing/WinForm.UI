@@ -26,38 +26,16 @@ namespace WinForm.UI.Forms
         {
             //将控制层传值过来
             this.Main = main;
-            //置顶窗体
-            TopMost = Main.TopMost;
-            Main.BringToFront();
-            //是否在任务栏显示
-            ShowInTaskbar = false;
-            //无边框模式
-            FormBorderStyle = FormBorderStyle.None;
-            //设置绘图层显示位置
-            this.Location = new Point(Main.Location.X - 5, Main.Location.Y - 5);
-            //设置ICO
-            Icon = Main.Icon;
-            ShowIcon = Main.ShowIcon;
-            //设置大小
-            Width = Main.Width + 10;
-            Height = Main.Height + 10;
-            //设置标题名
-            Text = Main.Text;
-            //绘图层窗体移动
-            Main.LocationChanged += new EventHandler(Main_LocationChanged);
-            Main.SizeChanged += new EventHandler(Main_SizeChanged);
-            Main.VisibleChanged += new EventHandler(Main_VisibleChanged);
-            //还原任务栏右键菜单
-            //CommonClass.SetTaskMenu(Main);
-            //加载背景
-            SetBits();
-            //窗口鼠标穿透效果
-            CanPenetrate();
+            Init();
         }
+
+       
+
 
         #region 初始化
         private void Init()
         {
+            SetStyles();
             //置顶窗体
             TopMost = Main.TopMost;
             Main.BringToFront();
@@ -129,6 +107,7 @@ namespace WinForm.UI.Forms
         }
         #endregion
 
+
         #region 控件层相关事件
         //移动主窗体时
         void Main_LocationChanged(object sender, EventArgs e)
@@ -154,6 +133,10 @@ namespace WinForm.UI.Forms
             this.Visible = Main.Visible;
         }
         #endregion
+
+       
+
+
 
         #region 使窗口有鼠标穿透功能
         /// <summary>

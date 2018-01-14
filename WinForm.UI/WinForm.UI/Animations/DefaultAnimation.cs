@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WinForm.UI.Utils;
 
@@ -42,5 +43,8 @@ namespace WinForm.UI.Animations
         {
             form.Location = new System.Drawing.Point(iActulaWidth / 2 - form.Width / 2, iActulaHeight / 2 - form.Height / 2);
         }
+
+      
+
     }
 }

@@ -46,6 +46,10 @@ namespace WinForm.UI.Controls
             timer.Enabled = false;
             timer.Interval = 4000;
             timer.Tick += Timer_Tick;
+            BringToFront();
+
+           
+
         }
 
         
@@ -136,7 +140,7 @@ namespace WinForm.UI.Controls
         /// <summary>
         /// 三角形宽
         /// </summary>
-        private int TriangleWidth = 20;
+        private int TriangleWidth = 15;
         /// <summary>
         /// 三角形高
         /// </summary>
@@ -164,7 +168,7 @@ namespace WinForm.UI.Controls
         public string Error
         {
             get { return message; }
-            set { if (message == value) return; message = value; this.Invalidate(); }
+            set { if (message == value) return; message = value; InitSize(value); }
         }
 
         
@@ -174,30 +178,43 @@ namespace WinForm.UI.Controls
             if (!base.Visible)
                 return;
             //base.OnPaint(e);
+           
+            
             Graphics g = e.Graphics;
             Rectangle rect = Rectangle.Empty;
             switch (errorAlignment)
             {
                 case ErrorAlignment.Top:
-                    rect = new Rectangle(0, 0, this.Width, this.Height - (TriangleHeight - 2));
+                    rect = new Rectangle(0, 0, this.Width, this.Height-TriangleHeight );
                     break;
                 case ErrorAlignment.Right:
                     //TriangleWidth = 15;
-                    rect = new Rectangle(TriangleWidth - 2, 0, this.Width, this.Height);
+                    rect = new Rectangle(TriangleWidth, 0, this.Width-TriangleWidth, this.Height);
                     break;
                 case ErrorAlignment.Left:
-                    rect = new Rectangle(0, 0, this.Width - TriangleWidth + 4, this.Height);
+                    rect = new Rectangle(0, 0, this.Width - TriangleWidth, this.Height);
                     break;
                 case ErrorAlignment.Bottom:
-                    rect = new Rectangle(0, TriangleHeight - 2, this.Width, this.Height);
+                    rect = new Rectangle(0, TriangleHeight, this.Width, this.Height- TriangleHeight);
                     break;
                 default:
                     break;
             }
 
-            //绘制背景
-            GraphicsPathHelper.Draw(rect, g, 18, false, backColor);
-            DrawTriangle(g);
+            Point[] point = GetPolygon();
+            GraphicsPath path = new GraphicsPath();
+            path.AddPolygon(point);
+            GraphicsPath dd= GraphicsPathHelper.DrawRoundRect(rect.X, rect.Y, rect.Width, rect.Height,18);
+            path.AddPath(dd,true);
+
+            path.CloseAllFigures();
+            this.Region = new Region(path);
+            using (Brush hrush = new SolidBrush(this.backColor))
+            {
+                //抗锯齿
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.FillPath(hrush, path);
+            }
 
             DrawText(g, rect);
 
@@ -207,6 +224,13 @@ namespace WinForm.UI.Controls
         {
             if (string.IsNullOrEmpty(message))
                 return;
+            if (errorAlignment == ErrorAlignment.Right)
+            {
+                rect.Width = rect.Width - 10;
+            }else if(errorAlignment == ErrorAlignment.Bottom)
+            {
+                rect.Height = rect.Height-10 ;
+            }
             using (Brush hrush = new SolidBrush(this.ForeColor))
             {
                 StringFormat format = new StringFormat();
@@ -222,21 +246,31 @@ namespace WinForm.UI.Controls
         /// <param name="g"></param>
         private void DrawTriangle(Graphics g)
         {
+            Point[] point = GetPolygon();
+            using (Brush brushes = new SolidBrush(backColor))
+            {
+                g.FillPolygon(brushes, point);
+            }
+        }
+
+
+        private Point[] GetPolygon()
+        {
             Point[] point = new Point[3];
             int x = 0, y = 0;
             switch (errorAlignment)
             {
                 case ErrorAlignment.Top:
                     x = 30;
-                    y = this.Height - TriangleHeight;//第一个点位置 总高- 三角形高
+                    y = this.Height-TriangleHeight;//第一个点位置 总高- 三角形高
                     point[0] = new Point(x, y);
 
-                    x = x + TriangleHeight / 2;//第二个点 X= 前一个点的X+ 三角形宽/2
-                    y = 30 + TriangleWidth / 2;//
+                    x = x + TriangleWidth / 2;//第二个点 X= 前一个点的X+ 三角形宽/2
+                    y = y + TriangleHeight;//
                     point[1] = new Point(x, y);
 
                     x = TriangleWidth + 30;
-                    y = this.Height - TriangleHeight;//第一个点位置 总高- 三角形高
+                    y = this.Height- TriangleHeight;//第一个点位置 总高- 三角形高
                     point[2] = new Point(x, y);
                     break;
                 case ErrorAlignment.Right:
@@ -281,27 +315,27 @@ namespace WinForm.UI.Controls
                 default:
                     break;
             }
-
-            using (Brush brushes = new SolidBrush(backColor))
-            {
-                g.FillPolygon(brushes, point);
-            }
+            return point;
         }
+
 
         public void SetError(Control control, string message,int Time=4000)
         {
+           
             if (base.Visible)
                 return;
 
             this.Owner = control;
-            InitSize(message);
-            InitLocation();
-            base.Visible = true;
             if (this.FindForm() == null)
             {
                 Form form = control.FindForm();
                 form.Controls.Add(this);
             }
+            InitSize(message);
+            InitLocation();
+            base.Visible = true;
+            BringToFront();
+            
             timer.Interval = Time;
             timer.Start();
         }
@@ -310,11 +344,32 @@ namespace WinForm.UI.Controls
         {
             this.message = message;
             Graphics g = CreateGraphics();
-            SizeF size = g.MeasureString(message, this.Font);
-            if (size.Height > 40)
-                this.Height = Convert.ToInt32(size.Height + 10);
 
+            g.PageUnit = GraphicsUnit.Pixel;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            StringFormat sf = new StringFormat();
+            sf.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
+            int w = (errorAlignment == ErrorAlignment.Right || errorAlignment == ErrorAlignment.Left) ? 160-TriangleWidth : 160;
 
+            SizeF size = g.MeasureString(message, this.Font,w, sf);
+            //Size si = new Size(160,100);
+            //Size size = TextRenderer.MeasureText(message,this.Font, si);
+
+            if (errorAlignment== ErrorAlignment.Top|| errorAlignment == ErrorAlignment.Bottom)
+            {
+                if (size.Height > 40 + TriangleHeight)
+                {
+                    this.Height = Convert.ToInt32(size.Height) + TriangleHeight + 30;
+                }else
+                {
+                    this.Height = 40 + TriangleHeight+30;
+                }
+            }else
+            {
+                if (size.Height > 40 )
+                    this.Height = Convert.ToInt32(size.Height + 10);
+                this.Width = 160 + 40;
+            }
         }
 
 
@@ -325,7 +380,7 @@ namespace WinForm.UI.Controls
             switch (errorAlignment)
             {
                 case ErrorAlignment.Top:
-                    this.Height = this.Height + TriangleHeight;
+                    //this.Height = this.Height + TriangleHeight;
                     x = point.X;
                     y = point.Y - this.Height;
                     break;
@@ -338,7 +393,7 @@ namespace WinForm.UI.Controls
                     y = point.Y - 5;
                     break;
                 case ErrorAlignment.Bottom:
-                    this.Height = this.Height + TriangleHeight;
+                   // this.Height = this.Height + TriangleHeight;
                     x = point.X;
                     y = point.Y + Owner.Height;
                     break;

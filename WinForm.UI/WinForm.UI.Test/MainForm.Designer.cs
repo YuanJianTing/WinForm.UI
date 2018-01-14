@@ -28,18 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.fButton1 = new WinForm.UI.Controls.FButton();
             this.fButton2 = new WinForm.UI.Controls.FButton();
             this.fTextBox1 = new WinForm.UI.Controls.FTextBox();
             this.fButton3 = new WinForm.UI.Controls.FButton();
             this.fButton4 = new WinForm.UI.Controls.FButton();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            this.fTextBox2 = new WinForm.UI.Controls.FTextBox();
-            this.fTextBox3 = new WinForm.UI.Controls.FTextBox();
+            this.fButton5 = new WinForm.UI.Controls.FButton();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // fButton1
@@ -105,34 +101,26 @@
             // circlePictureBox1
             // 
             this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
-            this.circlePictureBox1.Location = new System.Drawing.Point(671, 41);
+            this.circlePictureBox1.Location = new System.Drawing.Point(568, 50);
             this.circlePictureBox1.Name = "circlePictureBox1";
+            this.circlePictureBox1.Radius = 20;
             this.circlePictureBox1.Size = new System.Drawing.Size(149, 149);
-            this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.circlePictureBox1.TabIndex = 6;
             this.circlePictureBox1.TabStop = false;
             // 
-            // errorProvider1
+            // fButton5
             // 
-            this.errorProvider1.ContainerControl = this;
-           
-            // 
-            // fTextBox2
-            // 
-            this.fTextBox2.Location = new System.Drawing.Point(488, 245);
-            this.fTextBox2.Name = "fTextBox2";
-            this.fTextBox2.Size = new System.Drawing.Size(178, 26);
-            this.fTextBox2.TabIndex = 8;
-            this.fTextBox2.WatermarkText = "请输入手机号";
-           
-            // 
-            // fTextBox3
-            // 
-            this.fTextBox3.Location = new System.Drawing.Point(408, 334);
-            this.fTextBox3.Name = "fTextBox3";
-            this.fTextBox3.Size = new System.Drawing.Size(178, 26);
-            this.fTextBox3.TabIndex = 10;
-            this.fTextBox3.WatermarkText = "请输入手机号";
+            this.fButton5.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton5.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton5.EndBackColor = System.Drawing.Color.Black;
+            this.fButton5.ForeColor = System.Drawing.Color.White;
+            this.fButton5.Location = new System.Drawing.Point(282, 129);
+            this.fButton5.Name = "fButton5";
+            this.fButton5.Size = new System.Drawing.Size(98, 36);
+            this.fButton5.TabIndex = 11;
+            this.fButton5.Text = "Subimt";
+            this.fButton5.Click += new System.EventHandler(this.fButton5_Click);
             // 
             // MainForm
             // 
@@ -140,8 +128,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
-            this.Controls.Add(this.fTextBox3);
-            this.Controls.Add(this.fTextBox2);
+            this.Controls.Add(this.fButton5);
             this.Controls.Add(this.circlePictureBox1);
             this.Controls.Add(this.fButton4);
             this.Controls.Add(this.fButton3);
@@ -152,7 +139,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -166,9 +152,7 @@
         private Controls.FButton fButton3;
         private Controls.FButton fButton4;
         private Controls.CirclePictureBox circlePictureBox1;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
-        private Controls.FTextBox fTextBox2;
-        private Controls.FTextBox fTextBox3;
+        private Controls.FButton fButton5;
     }
 }
 
