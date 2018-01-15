@@ -112,6 +112,10 @@
     <None Include="Resources\Crystal Liu2.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="screenshot\form.png" />
+    <Content Include="screenshot\listview.png" />
+    <Content Include="screenshot\table.png" />
+    <Content Include="screenshot\tishi.png" />
     <None Include="Resources\CrystalLiu4.jpg" />
     <Content Include="Resources\main_light_bkg_top123.png" />
   </ItemGroup>
