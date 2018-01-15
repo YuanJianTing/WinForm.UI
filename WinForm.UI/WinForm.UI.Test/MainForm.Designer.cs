@@ -1,4 +1,6 @@
-﻿namespace WinForm.UI.Test
+﻿using System.Drawing;
+
+namespace WinForm.UI.Test
 {
     partial class MainForm
     {
@@ -28,6 +30,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.fButton1 = new WinForm.UI.Controls.FButton();
             this.fButton2 = new WinForm.UI.Controls.FButton();
             this.fTextBox1 = new WinForm.UI.Controls.FTextBox();
@@ -35,14 +38,20 @@
             this.fButton4 = new WinForm.UI.Controls.FButton();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
             this.fButton5 = new WinForm.UI.Controls.FButton();
+            this.test1 = new WinForm.UI.Test.Test();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.黏贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // fButton1
             // 
-            this.fButton1.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.fButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton1.EndBackColor = System.Drawing.Color.Black;
             this.fButton1.ForeColor = System.Drawing.Color.White;
             this.fButton1.Location = new System.Drawing.Point(26, 61);
             this.fButton1.Name = "fButton1";
@@ -53,9 +62,8 @@
             // 
             // fButton2
             // 
-            this.fButton2.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.fButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton2.EndBackColor = System.Drawing.Color.Black;
             this.fButton2.ForeColor = System.Drawing.Color.White;
             this.fButton2.Location = new System.Drawing.Point(151, 61);
             this.fButton2.Name = "fButton2";
@@ -74,9 +82,8 @@
             // 
             // fButton3
             // 
-            this.fButton3.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.fButton3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton3.EndBackColor = System.Drawing.Color.Black;
             this.fButton3.ForeColor = System.Drawing.Color.White;
             this.fButton3.Location = new System.Drawing.Point(26, 129);
             this.fButton3.Name = "fButton3";
@@ -87,9 +94,8 @@
             // 
             // fButton4
             // 
-            this.fButton4.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.fButton4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton4.EndBackColor = System.Drawing.Color.Black;
             this.fButton4.ForeColor = System.Drawing.Color.White;
             this.fButton4.Location = new System.Drawing.Point(151, 129);
             this.fButton4.Name = "fButton4";
@@ -111,9 +117,8 @@
             // 
             // fButton5
             // 
-            this.fButton5.BeginBackColor = System.Drawing.Color.Black;
+            this.fButton5.BackColor = System.Drawing.Color.Black;
             this.fButton5.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton5.EndBackColor = System.Drawing.Color.Black;
             this.fButton5.ForeColor = System.Drawing.Color.White;
             this.fButton5.Location = new System.Drawing.Point(282, 129);
             this.fButton5.Name = "fButton5";
@@ -122,12 +127,57 @@
             this.fButton5.Text = "Subimt";
             this.fButton5.Click += new System.EventHandler(this.fButton5_Click);
             // 
+            // test1
+            // 
+            this.test1.BackColor = System.Drawing.Color.Gainsboro;
+            this.test1.ForeColor = System.Drawing.Color.Red;
+            this.test1.Location = new System.Drawing.Point(204, 271);
+            this.test1.Name = "test1";
+            this.test1.Size = new System.Drawing.Size(151, 55);
+            this.test1.TabIndex = 12;
+            this.test1.Text = "test1";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.复制ToolStripMenuItem,
+            this.黏贴ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.刷新ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 76);
+            // 
+            // 复制ToolStripMenuItem
+            // 
+            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.复制ToolStripMenuItem.Text = "复制";
+            // 
+            // 黏贴ToolStripMenuItem
+            // 
+            this.黏贴ToolStripMenuItem.Name = "黏贴ToolStripMenuItem";
+            this.黏贴ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.黏贴ToolStripMenuItem.Text = "黏贴";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(97, 6);
+            // 
+            // 刷新ToolStripMenuItem
+            // 
+            this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
+            this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.刷新ToolStripMenuItem.Text = "刷新";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
+            this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.test1);
             this.Controls.Add(this.fButton5);
             this.Controls.Add(this.circlePictureBox1);
             this.Controls.Add(this.fButton4);
@@ -139,6 +189,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,6 +204,12 @@
         private Controls.FButton fButton4;
         private Controls.CirclePictureBox circlePictureBox1;
         private Controls.FButton fButton5;
+        private Test test1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 黏贴ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
     }
 }
 

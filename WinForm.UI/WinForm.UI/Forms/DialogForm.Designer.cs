@@ -71,9 +71,7 @@
             // 
             // btnNo
             // 
-            this.btnNo.BeginBackColor = System.Drawing.Color.Black;
             this.btnNo.DialogResult = System.Windows.Forms.DialogResult.No;
-            this.btnNo.EndBackColor = System.Drawing.Color.Black;
             this.btnNo.ForeColor = System.Drawing.Color.White;
             this.btnNo.Location = new System.Drawing.Point(193, 11);
             this.btnNo.Name = "btnNo";
@@ -84,9 +82,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.BeginBackColor = System.Drawing.Color.Black;
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.Yes;
-            this.btnOk.EndBackColor = System.Drawing.Color.Black;
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.Location = new System.Drawing.Point(97, 11);
             this.btnOk.Name = "btnOk";

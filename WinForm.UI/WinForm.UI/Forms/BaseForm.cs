@@ -222,6 +222,17 @@ namespace WinForm.UI.Forms
             _xButtonBounds = new Rectangle(this.Width - titleHeight, 0, titleHeight, titleHeight);
             _maxButtonBounds = new Rectangle(_xButtonBounds.X - titleHeight, 0, titleHeight, titleHeight);
             _minButtonBounds = new Rectangle(_maxButtonBounds.X - titleHeight, 0, titleHeight, titleHeight);
+
+
+            //窗体关闭时
+            Closing += (sender, e) =>
+            {
+                //先关闭阴影窗体
+                if (skin != null)
+                {
+                    skin.Close();
+                }
+            };
         }
 
         private void OnGlobalMouseMove(object sender, MouseEventArgs e)
@@ -236,7 +247,6 @@ namespace WinForm.UI.Forms
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(BackColor);
             //e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
             //base.OnPaint(e);
             if (IsTitle)
@@ -572,29 +582,12 @@ namespace WinForm.UI.Forms
             }
         }
 
-        //窗体关闭时
-        protected override void OnClosing(CancelEventArgs e)
-        {
-            if (animation != null && animation.IsClose == false)
-            {
-                animation.OnClosing();
-                e.Cancel = true;
-            }
-
-            base.OnClosing(e);
-            //先关闭阴影窗体
-            if (skin != null)
-            {
-                skin.Close();
-            }
-
-        }
-
         //控件首次创建时被调用
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
             SetReion();
+            
         }
 
         //圆角

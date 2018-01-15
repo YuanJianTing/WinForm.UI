@@ -34,23 +34,27 @@
             // fListView1
             // 
             this.fListView1.Adapter = null;
+            this.fListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.fListView1.BackColor = System.Drawing.Color.Transparent;
-            this.fListView1.Location = new System.Drawing.Point(21, 43);
+            this.fListView1.Location = new System.Drawing.Point(12, 94);
             this.fListView1.Name = "fListView1";
-            this.fListView1.Size = new System.Drawing.Size(399, 547);
+            this.fListView1.Size = new System.Drawing.Size(355, 564);
             this.fListView1.TabIndex = 0;
             // 
             // ListViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::WinForm.UI.Test.Properties.Resources.Crystal_Liu2;
+            this.BackColor = System.Drawing.Color.Gainsboro;
+            this.BackgroundImage = global::WinForm.UI.Test.Properties.Resources.CrystalLiu4;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(452, 627);
+            this.ClientSize = new System.Drawing.Size(379, 681);
             this.Controls.Add(this.fListView1);
             this.MaximizeBox = false;
             this.Name = "ListViewForm";
-            this.Text = "LIstViewForm";
+            this.Text = "QQ";
             this.TitleBackColor = System.Drawing.Color.Transparent;
             this.Load += new System.EventHandler(this.LIstViewForm_Load);
             this.ResumeLayout(false);

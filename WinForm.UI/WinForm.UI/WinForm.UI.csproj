@@ -42,7 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animations\Animation.cs" />
+    <Compile Include="Animations\AnimationDirection.cs" />
+    <Compile Include="Animations\AnimationManager.cs" />
     <Compile Include="Animations\DefaultAnimation.cs" />
+    <Compile Include="ColorScheme.cs" />
     <Compile Include="Controls\CirclePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>

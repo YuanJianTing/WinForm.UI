@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using WinForm.UI.Animations;
 
 namespace WinForm.UI.Controls
 {
@@ -17,8 +19,15 @@ namespace WinForm.UI.Controls
     * */
     public class SimpleObjectAdapter<T> : BaseAdapter<T>
     {
+
         public Color MouseMoveBackColor { get; set; } = Color.FromArgb(214, 219, 233);
         public Color SelectedBackColor { get; set; } = Color.FromArgb(104, 104, 104);
+
+        public SimpleObjectAdapter()
+        {
+
+        }
+
 
         public override void GetView(int position, ViewHolder holder, Graphics g)
         {
@@ -94,6 +103,7 @@ namespace WinForm.UI.Controls
         {
             if (!holder.isMouseMove && !holder.isMouseClick)
                 return;
+
             using (SolidBrush sb = new SolidBrush(SelectedBackColor))
             {
                 Rectangle newRec = holder.bounds;
@@ -105,9 +115,11 @@ namespace WinForm.UI.Controls
                 {
                     sb.Color = MouseMoveBackColor;
                 }
+
                 g.FillRectangle(sb, newRec);
             }
         }
+        
 
     }
 }

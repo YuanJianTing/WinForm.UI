@@ -26,7 +26,7 @@ namespace WinForm.UI
             set { defauleFont = value; }
         }
 
-        private Color defaultForeColor = Color.Black;
+        private Color defaultForeColor = Color.FromArgb(51,51,51);
         /// <summary>
         /// 设置默认字体颜色
         /// </summary>
@@ -59,25 +59,16 @@ namespace WinForm.UI
 
 
         #region button
-        private Color defaultButtonBeginBackColor = Color.Black;
+        private Color defaultButtonBackColor = Color.FromArgb(80, Color.Black);
         /// <summary>
-        /// 按钮默认开始背景色
+        /// 按钮默认背景色
         /// </summary>
-        public Color ButtonBeginBackColor
+        public Color ButtonBackColor
         {
-            get { return defaultButtonBeginBackColor; }
-            set { defaultButtonBeginBackColor = value; }
+            get { return defaultButtonBackColor; }
+            set { defaultButtonBackColor = value; }
         }
-        private Color defaultButtonEndBackColor = Color.Black;
-        /// <summary>
-        /// 按钮默认结束背景色
-        /// </summary>
-        public Color ButtonEndBackColor
-        {
-            get { return defaultButtonEndBackColor; }
-            set { defaultButtonEndBackColor = value; }
-        }
-
+       
         private Color defaultButtonForeColor = Color.White;
         /// <summary>
         /// 按钮默认背景色
@@ -227,7 +218,7 @@ namespace WinForm.UI
         }
 
 
-        private Color defaultMaxBoxBackColor = Color.FromArgb(203, 196, 192);
+        private Color defaultMaxBoxBackColor = Color.FromArgb(70, Color.White);
         /// <summary>
         /// 设置默认窗体最大化按钮背景颜色
         /// </summary>
@@ -237,7 +228,7 @@ namespace WinForm.UI
             set { defaultMaxBoxBackColor = value; }
         }
 
-        private Color defaultMinBoxBackColor = Color.FromArgb(203, 196, 192);
+        private Color defaultMinBoxBackColor = Color.FromArgb(70, Color.White);
         /// <summary>
         /// 设置默认窗体最小化按钮背景颜色
         /// </summary>

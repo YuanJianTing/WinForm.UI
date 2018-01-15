@@ -193,6 +193,7 @@ namespace WinForm.UI.Controls
             if (e.Delta > 0) Value -= 50;
             if (e.Delta < 0) Value += 50;
         }
+        
 
         private void Owner_Click(object sender, EventArgs e)
         {

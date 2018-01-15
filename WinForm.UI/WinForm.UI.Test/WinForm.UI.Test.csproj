@@ -67,6 +67,9 @@
     <Compile Include="TableForm.Designer.cs">
       <DependentUpon>TableForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Test.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="ListViewForm.resx">
       <DependentUpon>ListViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,6 +112,7 @@
     <None Include="Resources\Crystal Liu2.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CrystalLiu4.jpg" />
     <Content Include="Resources\main_light_bkg_top123.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

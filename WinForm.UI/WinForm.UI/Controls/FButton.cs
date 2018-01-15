@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using WinForm.UI.Animations;
 using WinForm.UI.Utils;
 
 namespace WinForm.UI.Controls
@@ -31,18 +33,18 @@ namespace WinForm.UI.Controls
         [DefaultValue(typeof(int), "10")]
         public int Radius { get { return radius; } set { if (value == radius) return; radius = value; this.Invalidate(); } }
 
-        private Color beginColor = Color.FromArgb(0, 122, 204);
-        [Category("BackColor")]
-        [Description("获取或设置当前控件的起始背景色")]
-        [DefaultValue(typeof(Color), "0, 122, 204")]
-        public Color BeginBackColor { get { return beginColor; } set { if (value == beginColor) return; beginColor = value; this.Invalidate(); } }
+        //private Color beginColor = Color.FromArgb(80, Color.Black);
+        //[Category("BackColor")]
+        //[Description("获取或设置当前控件的起始背景色")]
+        //[DefaultValue(typeof(Color), "0, 122, 204")]
+        //public Color BeginBackColor { get { return beginColor; } set { if (value == beginColor) return; beginColor = value; this.Invalidate(); } }
 
 
-        private Color endColor = Color.FromArgb(8, 39, 57);
-        [Category("BackColor")]
-        [Description("获取或设置当前控件的结束背景色")]
-        [DefaultValue(typeof(Color), "8, 39, 57")]
-        public Color EndBackColor { get { return endColor; } set { if (value == endColor) return; endColor = value; this.Invalidate(); } }
+        //private Color endColor = Color.FromArgb(80, Color.Black);
+        //[Category("BackColor")]
+        //[Description("获取或设置当前控件的结束背景色")]
+        //[DefaultValue(typeof(Color), "8, 39, 57")]
+        //public Color EndBackColor { get { return endColor; } set { if (value == endColor) return; endColor = value; this.Invalidate(); } }
 
 
         private Color MouseOverBackColor = Color.FromArgb(215, 210, 206);
@@ -52,14 +54,19 @@ namespace WinForm.UI.Controls
         public Color mouseOverBackColor { get { return MouseOverBackColor; } set { MouseOverBackColor = value; } }
 
 
-        //private Color backColor = Color.FromArgb(194, 186, 181);
+
         //[Category("Skin")]
         //[Description("获取或设置控件的背景颜色")]
         //[DefaultValue(typeof(Color))]
-        [Browsable(false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Color BackColor { get { return base.BackColor; } set { base.BackColor = Color.Transparent; } }
+        //[Browsable(false)]
+        //[EditorBrowsable(EditorBrowsableState.Never)]
+        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+
+        private Color backColor = Color.FromArgb(194, 186, 181);
+        [Category("BackColor")]
+        [Description("获取或设置控件的背景色")]
+        [DefaultValue(typeof(string), "")]
+        public new Color BackColor { get { return backColor; } set { if (backColor == value) return; backColor = value; this.Invalidate(); } }
 
 
         [Browsable(false)]
@@ -106,11 +113,10 @@ namespace WinForm.UI.Controls
 
         #endregion
 
-
+        private AnimationManager _animationManager;
         public FButton()
         {
-            this.beginColor = builder.ButtonBeginBackColor;
-            this.endColor = builder.ButtonEndBackColor;
+            this.BackColor = builder.ButtonBackColor;
             this.ForeColor = builder.ButtonForeColor;
 
             SetStyle(
@@ -129,24 +135,31 @@ namespace WinForm.UI.Controls
             base.Size = new Size(90, 28);
             textAlign = ContentAlignment.MiddleCenter;
             imageAlign = ContentAlignment.MiddleCenter;
+            _animationManager = new AnimationManager(this);
         }
 
-        /// <summary>
-        /// Removes the alpha component of a color.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        public static Color RemoveAlpha(Color color)
-        {
-            return Color.FromArgb(color.R, color.G, color.B);
-        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Rectangle rec = new Rectangle(0, 0, this.Width, this.Height);
-            GraphicsPathHelper.Draw(rec, e.Graphics, radius, false, beginColor, endColor);
+            GraphicsPathHelper.Draw(rec, e.Graphics, radius, false, BackColor);
             base.OnPaint(e);
             Graphics g = e.Graphics;
+
+            if (_animationManager.IsAnimating())
+            {
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                Color bg = BackColor.TakeBackColor();//取相反色
+                using (SolidBrush hrush = new SolidBrush(Color.FromArgb(50, bg)))
+                {
+                    float animationValue = (float)_animationManager.GetProgress();
+                    float x = _animationManager.GetMouseDown().X - animationValue / 2;
+                    float y = _animationManager.GetMouseDown().Y - animationValue / 2;
+                    RectangleF rect = new RectangleF(x, y, animationValue, animationValue);
+                    g.FillEllipse(hrush, rect);
+                }
+                g.SmoothingMode = SmoothingMode.None;
+            }
 
             DrawImage(e.Graphics);
             DrawText(e.Graphics);
@@ -249,42 +262,27 @@ namespace WinForm.UI.Controls
                 }
             }
         }
-
-
-        #region 鼠标操作
-        //鼠标移入
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            base.OnMouseEnter(e);
-            //base.BackColor = mouseOverBackColor;
-        }
-
-        //鼠标离开
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            base.OnMouseLeave(e);
-            //base.BackColor = backColor;
-        }
-
         private Padding tempPadding = Padding.Empty;
-
-        protected override void OnMouseDown(MouseEventArgs e)
+        protected override void OnCreateControl()
         {
-            tempPadding = this.Padding;
-            base.OnMouseDown(e);
-            base.Padding = new Padding(tempPadding.Left + 1, tempPadding.Top + 1, tempPadding.Right, tempPadding.Bottom);
-            //base.BackColor = backColor;
+            base.OnCreateControl();
+            MouseDown += (sender, args) =>
+            {
+                tempPadding = this.Padding;
+                this.Padding = new Padding(tempPadding.Left + 1, tempPadding.Top + 1, tempPadding.Right, tempPadding.Bottom);
+                if (args.Button == MouseButtons.Left)
+                {
+                    _animationManager.StartNewAnimation(args.Location);
+                    Invalidate();
+                }
+            };
+            MouseUp += (sender, args) =>
+            {
+                this.Padding = tempPadding;
+                Invalidate();
+            };
         }
 
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-            base.Padding = tempPadding;
-            //base.BackColor = mouseOverBackColor;
-        }
-
-
-        #endregion
 
 
         public void PerformClick()

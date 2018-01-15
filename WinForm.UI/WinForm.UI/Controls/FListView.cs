@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using WinForm.UI.Animations;
 using WinForm.UI.Events;
 
 namespace WinForm.UI.Controls

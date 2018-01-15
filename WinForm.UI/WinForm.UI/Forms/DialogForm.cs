@@ -206,7 +206,7 @@ namespace WinForm.UI.Forms
             {
                 this.DialogResult = DialogResult.OK;
             }
-            this.Close();
+            //this.Close();
         }
 
     }

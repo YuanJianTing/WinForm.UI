@@ -37,8 +37,9 @@ namespace WinForm.UI.Test
 
         private void fButton3_Click(object sender, EventArgs e)
         {
-            DialogForm.Show("呵呵哒","提示",MessageFormIcon.OK,MessageFormButtons.OK);
+            DialogResult dd= DialogForm.Show("呵呵哒","提示",MessageFormIcon.OK,MessageFormButtons.OK);
         }
+
 
         private void fButton4_Click(object sender, EventArgs e)
         {

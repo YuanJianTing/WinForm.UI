@@ -63,9 +63,9 @@ namespace WinForm.UI.Test.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
-        internal static System.Drawing.Bitmap Crystal_Liu2 {
+        internal static System.Drawing.Bitmap CrystalLiu4 {
             get {
-                object obj = ResourceManager.GetObject("Crystal Liu2", resourceCulture);
+                object obj = ResourceManager.GetObject("CrystalLiu4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

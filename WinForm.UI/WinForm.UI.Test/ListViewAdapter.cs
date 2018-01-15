@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
+using WinForm.UI.Animations;
 using WinForm.UI.Controls;
 using WinForm.UI.Test.Entity;
 using WinForm.UI.Test.Properties;
@@ -19,18 +21,23 @@ namespace WinForm.UI.Test
     * */
     public class ListViewAdapter : BaseAdapter<Contart>
     {
+
         private Font font;
         private Color SubItemSelectColor = Color.FromArgb(50,Color.White);
         private Color ItemMouseOnColor = Color.FromArgb(50, Color.White);
-
         private Color SubItemBackColor = Color.Transparent;
-
         private Font LastFont;
 
         public ListViewAdapter()
         {
             font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             LastFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+           
+        }
+
+        protected override void OnBindControl(Control Owner)
+        {
+            base.OnBindControl(Owner);
         }
 
         /// <summary>
@@ -61,19 +68,23 @@ namespace WinForm.UI.Test
             holder.bounds.Height = 65;
 
             Contart bean = GetItem(position) as Contart;
-            SolidBrush sb = new SolidBrush(SubItemBackColor);
+
+            Color c = SubItemBackColor;
             if (holder.isMouseClick)
             {        //判断改子项是否被选中
-                sb.Color = SubItemSelectColor;
+                c = SubItemSelectColor;
             }
             else if (holder.isMouseMove)
             {
-                sb.Color = ItemMouseOnColor;
+                c = ItemMouseOnColor;
             }
             else
-                sb.Color = SubItemBackColor;
+                c = SubItemBackColor;
 
-            g.FillRectangle(sb, holder.bounds);
+            using (SolidBrush b = new SolidBrush(c))
+            {
+                g.FillRectangle(b, holder.bounds);
+            }
 
             DrawHeadImage(g, bean, holder.bounds);
 

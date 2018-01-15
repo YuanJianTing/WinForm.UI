@@ -24,13 +24,19 @@ namespace WinForm.UI.Controls
         protected Control owner;
         internal Control Owner
         {
-            set { this.owner = value; }
+            set { this.owner = value; OnBindControl(value); }
         }
 
         public void notifyDataSetChanged()
         {
             if (owner != null)
                 owner.Invalidate();
+        }
+
+
+        protected virtual void OnBindControl(Control Owner)
+        {
+
         }
 
     }

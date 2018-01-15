@@ -193,9 +193,7 @@
             // 
             // fButton1
             // 
-            this.fButton1.BeginBackColor = System.Drawing.Color.Black;
             this.fButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.fButton1.EndBackColor = System.Drawing.Color.Black;
             this.fButton1.ForeColor = System.Drawing.Color.White;
             this.fButton1.Location = new System.Drawing.Point(645, 464);
             this.fButton1.Name = "fButton1";
