@@ -53,6 +53,19 @@ namespace WinForm.UI.Test
         {
             List<Contart> list = state as List<Contart>;
             adapter.AddItems(list);
+            this.fListView1.ScrollBottom();
+        }
+
+        private void fButton1_Click(object sender, EventArgs e)
+        {
+            this.fListView1.ScrollBottom();
+        }
+
+        private void fButton2_Click(object sender, EventArgs e)
+        {
+            new Thread(() => {
+                LoadData();
+            }).Start();
         }
     }
 }

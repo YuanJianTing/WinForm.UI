@@ -38,12 +38,12 @@ namespace WinForm.UI.Test
             this.fButton4 = new WinForm.UI.Controls.FButton();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
             this.fButton5 = new WinForm.UI.Controls.FButton();
-            this.test1 = new WinForm.UI.Test.Test();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.黏贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.test1 = new WinForm.UI.Test.Test();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -107,13 +107,17 @@ namespace WinForm.UI.Test
             // circlePictureBox1
             // 
             this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
+            this.circlePictureBox1.IsSelected = false;
             this.circlePictureBox1.Location = new System.Drawing.Point(568, 50);
+            this.circlePictureBox1.MouseMoveImage = null;
             this.circlePictureBox1.Name = "circlePictureBox1";
             this.circlePictureBox1.Radius = 20;
+            this.circlePictureBox1.SelectedImage = global::WinForm.UI.Test.Properties.Resources.main_light_bkg_top123;
             this.circlePictureBox1.Size = new System.Drawing.Size(149, 149);
             this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.circlePictureBox1.TabIndex = 6;
             this.circlePictureBox1.TabStop = false;
+            this.circlePictureBox1.Click += new System.EventHandler(this.circlePictureBox1_Click);
             // 
             // fButton5
             // 
@@ -126,16 +130,6 @@ namespace WinForm.UI.Test
             this.fButton5.TabIndex = 11;
             this.fButton5.Text = "Subimt";
             this.fButton5.Click += new System.EventHandler(this.fButton5_Click);
-            // 
-            // test1
-            // 
-            this.test1.BackColor = System.Drawing.Color.Gainsboro;
-            this.test1.ForeColor = System.Drawing.Color.Red;
-            this.test1.Location = new System.Drawing.Point(204, 271);
-            this.test1.Name = "test1";
-            this.test1.Size = new System.Drawing.Size(151, 55);
-            this.test1.TabIndex = 12;
-            this.test1.Text = "test1";
             // 
             // contextMenuStrip1
             // 
@@ -169,6 +163,17 @@ namespace WinForm.UI.Test
             this.刷新ToolStripMenuItem.Name = "刷新ToolStripMenuItem";
             this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.刷新ToolStripMenuItem.Text = "刷新";
+            // 
+            // test1
+            // 
+            this.test1.BackColor = System.Drawing.Color.Gainsboro;
+            this.test1.ForeColor = System.Drawing.Color.Red;
+            this.test1.Location = new System.Drawing.Point(204, 271);
+            this.test1.Name = "test1";
+            this.test1.Size = new System.Drawing.Size(151, 55);
+            this.test1.TabIndex = 12;
+            this.test1.Text = "test1";
+            this.test1.Click += new System.EventHandler(this.test1_Click);
             // 
             // MainForm
             // 

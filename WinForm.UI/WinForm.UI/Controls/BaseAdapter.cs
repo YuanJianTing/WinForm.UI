@@ -41,7 +41,7 @@ namespace WinForm.UI.Controls
             this.items.AddRange(items);
             notifyDataSetChanged();
         }
-        public void SetItmes(IEnumerable<T> items)
+        public void SetItems(IEnumerable<T> items)
         {
             this.items.Clear();
             this.items.AddRange(items);

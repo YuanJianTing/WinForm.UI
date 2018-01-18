@@ -577,8 +577,6 @@ namespace WinForm.UI.Forms
             else
             {
                 base.OnVisibleChanged(e);
-                if (animation != null)
-                    animation.OnClosing();
             }
         }
 

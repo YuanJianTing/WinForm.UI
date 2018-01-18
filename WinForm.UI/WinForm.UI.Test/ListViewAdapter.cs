@@ -23,7 +23,7 @@ namespace WinForm.UI.Test
     {
 
         private Font font;
-        private Color SubItemSelectColor = Color.FromArgb(50,Color.White);
+        private Color SubItemSelectColor = Color.FromArgb(50, Color.White);
         private Color ItemMouseOnColor = Color.FromArgb(50, Color.White);
         private Color SubItemBackColor = Color.Transparent;
         private Font LastFont;
@@ -32,9 +32,9 @@ namespace WinForm.UI.Test
         {
             font = new System.Drawing.Font("微软雅黑", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             LastFont = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-           
-        }
 
+        }
+        private Point ff ;
         protected override void OnBindControl(Control Owner)
         {
             base.OnBindControl(Owner);
@@ -88,7 +88,6 @@ namespace WinForm.UI.Test
 
             DrawHeadImage(g, bean, holder.bounds);
 
-
             int x = 10 + 50;
             int y = holder.bounds.Bottom - (holder.bounds.Height / 2 + 10);
             if (!string.IsNullOrWhiteSpace(bean.LastMessage))
@@ -117,6 +116,9 @@ namespace WinForm.UI.Test
                     g.DrawString(time, LastFont, brush, new PointF(x, y));
                 }
             }
+
+
         }
+
     }
 }

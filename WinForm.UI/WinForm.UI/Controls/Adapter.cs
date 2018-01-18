@@ -48,6 +48,7 @@ namespace WinForm.UI.Controls
         public Rectangle bounds;
         public bool isMouseClick = false;
         public bool isMouseMove = false;
+        public Point MouseLocation;
         public ViewHolder(Rectangle bounds)
         {
             this.bounds = bounds;

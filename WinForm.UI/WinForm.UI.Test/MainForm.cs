@@ -51,5 +51,15 @@ namespace WinForm.UI.Test
             error.ErrorAlignment = UI.Controls.ErrorAlignment.Bottom;
             error.SetError(this.fTextBox1, "请输入手机号！！");
         }
+
+        private void test1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void circlePictureBox1_Click(object sender, EventArgs e)
+        {
+            this.circlePictureBox1.IsSelected = (!this.circlePictureBox1.IsSelected);
+        }
     }
 }

@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.fListView1 = new WinForm.UI.Controls.FListView();
+            this.fButton1 = new WinForm.UI.Controls.FButton();
+            this.fButton2 = new WinForm.UI.Controls.FButton();
             this.SuspendLayout();
             // 
             // fListView1
@@ -38,10 +40,35 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.fListView1.BackColor = System.Drawing.Color.Transparent;
+            this.fListView1.ItemDivider = 10;
             this.fListView1.Location = new System.Drawing.Point(12, 94);
             this.fListView1.Name = "fListView1";
             this.fListView1.Size = new System.Drawing.Size(355, 564);
             this.fListView1.TabIndex = 0;
+            // 
+            // fButton1
+            // 
+            this.fButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.fButton1.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton1.ForeColor = System.Drawing.Color.White;
+            this.fButton1.Location = new System.Drawing.Point(200, 43);
+            this.fButton1.Name = "fButton1";
+            this.fButton1.Size = new System.Drawing.Size(90, 28);
+            this.fButton1.TabIndex = 1;
+            this.fButton1.Text = "滚动到底部";
+            this.fButton1.Click += new System.EventHandler(this.fButton1_Click);
+            // 
+            // fButton2
+            // 
+            this.fButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.fButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton2.ForeColor = System.Drawing.Color.White;
+            this.fButton2.Location = new System.Drawing.Point(70, 43);
+            this.fButton2.Name = "fButton2";
+            this.fButton2.Size = new System.Drawing.Size(90, 28);
+            this.fButton2.TabIndex = 2;
+            this.fButton2.Text = "添加数据";
+            this.fButton2.Click += new System.EventHandler(this.fButton2_Click);
             // 
             // ListViewForm
             // 
@@ -51,6 +78,8 @@
             this.BackgroundImage = global::WinForm.UI.Test.Properties.Resources.CrystalLiu4;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(379, 681);
+            this.Controls.Add(this.fButton2);
+            this.Controls.Add(this.fButton1);
             this.Controls.Add(this.fListView1);
             this.MaximizeBox = false;
             this.Name = "ListViewForm";
@@ -64,5 +93,7 @@
         #endregion
 
         private Controls.FListView fListView1;
+        private Controls.FButton fButton1;
+        private Controls.FButton fButton2;
     }
 }

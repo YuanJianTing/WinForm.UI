@@ -22,6 +22,7 @@ namespace WinForm.UI.Animations
         private double Progress = 0;
         private int max = 0;
         private Point MouseDown;
+        private Rectangle region;
 
         /// <summary>
         /// Constructor
@@ -38,16 +39,30 @@ namespace WinForm.UI.Animations
         private void AnimationTimerOnTick(object sender, EventArgs eventArgs)
         {
             Progress += 4;
-            owner.Invalidate();
+            if (region != Rectangle.Empty)
+                owner.Invalidate(region);
+            else
+                owner.Invalidate();
             if (Progress > max)
                 _animationTimer.Stop();
         }
-       
+
 
         public void StartNewAnimation(Point location)
         {
+            StartNewAnimation(location, Rectangle.Empty);
+        }
+
+        public void StartNewAnimation(Point location, Rectangle region)
+        {
+            this.region = region;
             MouseDown = location;
-            max = (owner.Width > owner.Height) ? owner.Width : owner.Height;
+            if (region != Rectangle.Empty)
+            {
+                max = (region.Width > region.Height) ? region.Width : region.Height;
+            }
+            else
+                max = (owner.Width > owner.Height) ? owner.Width : owner.Height;
             Progress = 0;
             _animationTimer.Start();
         }

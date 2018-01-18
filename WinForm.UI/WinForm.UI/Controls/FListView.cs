@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WinForm.UI.Animations;
 using WinForm.UI.Events;
@@ -32,11 +33,11 @@ namespace WinForm.UI.Controls
         ///// 鼠标位置
         ///// </summary>
         private Point m_ptMousePos;
-        private ViewHolder m_mouseHolder;
+        public ViewHolder MouseHolder { get; set; }
         /// <summary>
         /// 当前选中向
         /// </summary>
-        private ViewHolder selectHolder;
+        public ViewHolder SelectHolder { get; set; }
 
         public FListView()
         {
@@ -98,6 +99,11 @@ namespace WinForm.UI.Controls
             }
         }
 
+        private int itemDivider = 0;
+        [Category("Skin")]
+        [Description("获取或设置当前控件Item向的间隔")]
+        [DefaultValue(typeof(int), "0")]
+        public int ItemDivider { get { return itemDivider; } set { if (itemDivider == value) return; itemDivider = value; this.Invalidate(); } }
 
         #region 滚动条
         /// <summary>
@@ -245,13 +251,17 @@ namespace WinForm.UI.Controls
                 }
                 holder.isMouseClick = false;
                 holder.isMouseMove = false;
-                if (selectHolder == holder)
+                holder.MouseLocation = Point.Empty;
+                if (SelectHolder == holder)
+                {
                     holder.isMouseClick = true;
-                else if (m_mouseHolder == holder)
+                    holder.MouseLocation = SelectHolder.MouseLocation;
+                }
+                else if (MouseHolder == holder)
                     holder.isMouseMove = true;
 
                 adapter.GetView(i, holder, g);
-                y += holder.bounds.Height;
+                y += holder.bounds.Height+ itemDivider;
                 VirtualWidth = holder.bounds.Width;
             }
             VirtualHeight = y;
@@ -270,9 +280,9 @@ namespace WinForm.UI.Controls
             {
                 if (item.bounds.Contains(m_ptMousePos))
                 {
-                    if (item == m_mouseHolder)
+                    if (item == MouseHolder)
                         break;
-                    m_mouseHolder = item;
+                    MouseHolder = item;
                     this.Invalidate();
                     break;
                 }
@@ -280,28 +290,48 @@ namespace WinForm.UI.Controls
             base.OnMouseMove(e);
         }
 
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            MouseHolder = null;
+        }
+
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            foreach (ViewHolder item in Rows)
-            {
-                if (item.bounds.Contains(m_ptMousePos))
-                {
-                    if (item == selectHolder)
-                        break;
-                    selectHolder = item;
-                    this.Invalidate();
-                    OnItemClick(new ItemClickEventArgs(item));
-                    break;
-                }
-            }
+            
             base.OnMouseClick(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             this.Focus();
+            foreach (ViewHolder item in Rows)
+            {
+                if (item.bounds.Contains(m_ptMousePos))
+                {
+                    if (item == SelectHolder)
+                        break;
+                    SelectHolder = item;
+                    SelectHolder.MouseLocation = e.Location;
+                    this.Invalidate();
+                    OnItemClick(new ItemClickEventArgs(item));
+                    break;
+                }
+            }
             base.OnMouseDown(e);
         }
+        /// <summary>
+        /// 滚动到底部
+        /// </summary>
+        public void ScrollBottom(int time=50)
+        {
+            new Thread(()=> {
+                Thread.Sleep(time);//停止50毫秒 否则 如果在add之后执行这无法显示最后一条
+                chatVScroll.Value = chatVScroll.VirtualHeight - this.Height - 5;
+            }).Start();
+            
+        }
+
 
 
         public delegate void ScrollHandler(object sender, ScrollEventArgs e);

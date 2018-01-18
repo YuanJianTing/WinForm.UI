@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\WeChat\WeChat\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\Contart.cs" />
+    <Compile Include="Entity\RContact.cs" />
     <Compile Include="Entity\TradeBean.cs" />
     <Compile Include="ListViewAdapter.cs" />
     <Compile Include="ListViewForm.cs">
