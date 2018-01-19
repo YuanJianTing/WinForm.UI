@@ -27,7 +27,7 @@ namespace WinForm.UI.Test
         {
             adapter = new ListViewAdapter();
             fListView1.Adapter = adapter;
-
+            //fListView1.IsMouseFeedBack = false;//取消鼠标反馈
             new Thread(() => {
                 LoadData();
             }).Start();
@@ -66,6 +66,12 @@ namespace WinForm.UI.Test
             new Thread(() => {
                 LoadData();
             }).Start();
+        }
+
+        private void fListView1_ItemClick(object sender, Events.ItemClickEventArgs e)
+        {
+            Contart data=e.ViewHolder.UserData as Contart;
+            MessageBox.Show(data.LastMessage);
         }
     }
 }

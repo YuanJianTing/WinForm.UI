@@ -44,6 +44,7 @@ namespace WinForm.UI.Test
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.test1 = new WinForm.UI.Test.Test();
+            this.loadingView1 = new WinForm.UI.Controls.LoadingView();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -175,6 +176,15 @@ namespace WinForm.UI.Test
             this.test1.Text = "test1";
             this.test1.Click += new System.EventHandler(this.test1_Click);
             // 
+            // loadingView1
+            // 
+            this.loadingView1.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.loadingView1.Location = new System.Drawing.Point(437, 236);
+            this.loadingView1.Name = "loadingView1";
+            this.loadingView1.Size = new System.Drawing.Size(214, 207);
+            this.loadingView1.TabIndex = 13;
+            this.loadingView1.Text = "loadingView1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -182,6 +192,7 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.loadingView1);
             this.Controls.Add(this.test1);
             this.Controls.Add(this.fButton5);
             this.Controls.Add(this.circlePictureBox1);
@@ -215,6 +226,7 @@ namespace WinForm.UI.Test
         private System.Windows.Forms.ToolStripMenuItem 黏贴ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
+        private Controls.LoadingView loadingView1;
     }
 }
 

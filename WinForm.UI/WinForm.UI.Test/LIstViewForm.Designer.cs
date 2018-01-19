@@ -42,9 +42,12 @@
             this.fListView1.BackColor = System.Drawing.Color.Transparent;
             this.fListView1.ItemDivider = 10;
             this.fListView1.Location = new System.Drawing.Point(12, 94);
+            this.fListView1.MouseHolder = null;
             this.fListView1.Name = "fListView1";
+            this.fListView1.SelectHolder = null;
             this.fListView1.Size = new System.Drawing.Size(355, 564);
             this.fListView1.TabIndex = 0;
+            this.fListView1.ItemClick += new WinForm.UI.Controls.FListView.ItemClickHandler(this.fListView1_ItemClick);
             // 
             // fButton1
             // 

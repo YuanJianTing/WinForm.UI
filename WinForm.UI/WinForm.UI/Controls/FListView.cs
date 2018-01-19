@@ -33,11 +33,17 @@ namespace WinForm.UI.Controls
         ///// 鼠标位置
         ///// </summary>
         private Point m_ptMousePos;
+        [Browsable(false)]
         public ViewHolder MouseHolder { get; set; }
         /// <summary>
         /// 当前选中向
         /// </summary>
+        [Browsable(false)]
         public ViewHolder SelectHolder { get; set; }
+        /// <summary>
+        /// 是否有鼠标反馈效果
+        /// </summary>
+        public bool IsMouseFeedBack = true;
 
         public FListView()
         {
@@ -233,7 +239,10 @@ namespace WinForm.UI.Controls
         private void DrawColumn(Graphics g)
         {
             if (adapter == null || adapter.GetCount() == 0)
+            {
+                VirtualWidth = 0;
                 return;
+            }
             int y = 0;
             for (int i = 0; i < adapter.GetCount(); i++)
             {
@@ -241,6 +250,11 @@ namespace WinForm.UI.Controls
                 if (Rows.Count > i)
                 {
                     holder = Rows[i];
+                    holder.position = i;
+                    holder.bounds.X = 1;
+                    holder.bounds.Y = y;
+                    holder.bounds.Width = this.Width - 2;
+                    holder.bounds.Height = 50;
                 }
                 else
                 {
@@ -261,7 +275,7 @@ namespace WinForm.UI.Controls
                     holder.isMouseMove = true;
 
                 adapter.GetView(i, holder, g);
-                y += holder.bounds.Height+ itemDivider;
+                y += holder.bounds.Height + itemDivider;
                 VirtualWidth = holder.bounds.Width;
             }
             VirtualHeight = y;
@@ -275,16 +289,19 @@ namespace WinForm.UI.Controls
         {
             m_ptMousePos = e.Location;
             m_ptMousePos.Y += chatVScroll.Value;
-            //判断鼠标是否在行中
-            foreach (ViewHolder item in Rows)
+            if (IsMouseFeedBack)
             {
-                if (item.bounds.Contains(m_ptMousePos))
+                //判断鼠标是否在行中
+                foreach (ViewHolder item in Rows)
                 {
-                    if (item == MouseHolder)
+                    if (item.bounds.Contains(m_ptMousePos))
+                    {
+                        if (item == MouseHolder)
+                            break;
+                        MouseHolder = item;
+                        this.Invalidate();
                         break;
-                    MouseHolder = item;
-                    this.Invalidate();
-                    break;
+                    }
                 }
             }
             base.OnMouseMove(e);
@@ -298,7 +315,7 @@ namespace WinForm.UI.Controls
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            
+
             base.OnMouseClick(e);
         }
 
@@ -309,11 +326,12 @@ namespace WinForm.UI.Controls
             {
                 if (item.bounds.Contains(m_ptMousePos))
                 {
-                    if (item == SelectHolder)
-                        break;
                     SelectHolder = item;
                     SelectHolder.MouseLocation = e.Location;
-                    this.Invalidate();
+                    if (item != SelectHolder)
+                    {
+                        this.Invalidate();
+                    }
                     OnItemClick(new ItemClickEventArgs(item));
                     break;
                 }
@@ -323,13 +341,14 @@ namespace WinForm.UI.Controls
         /// <summary>
         /// 滚动到底部
         /// </summary>
-        public void ScrollBottom(int time=50)
+        public void ScrollBottom(int time = 50)
         {
-            new Thread(()=> {
+            new Thread(() =>
+            {
                 Thread.Sleep(time);//停止50毫秒 否则 如果在add之后执行这无法显示最后一条
                 chatVScroll.Value = chatVScroll.VirtualHeight - this.Height - 5;
             }).Start();
-            
+
         }
 
 

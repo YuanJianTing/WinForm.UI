@@ -68,7 +68,7 @@ namespace WinForm.UI.Test
             holder.bounds.Height = 65;
 
             Contart bean = GetItem(position) as Contart;
-
+            holder.UserData = bean;
             Color c = SubItemBackColor;
             if (holder.isMouseClick)
             {        //判断改子项是否被选中
