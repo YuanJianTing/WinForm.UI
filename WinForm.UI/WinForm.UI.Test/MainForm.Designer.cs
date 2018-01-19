@@ -36,7 +36,6 @@ namespace WinForm.UI.Test
             this.fTextBox1 = new WinForm.UI.Controls.FTextBox();
             this.fButton3 = new WinForm.UI.Controls.FButton();
             this.fButton4 = new WinForm.UI.Controls.FButton();
-            this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
             this.fButton5 = new WinForm.UI.Controls.FButton();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +44,11 @@ namespace WinForm.UI.Test
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fButton6 = new WinForm.UI.Controls.FButton();
             this.loadingView2 = new WinForm.UI.Controls.LoadingView();
-            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
+            this.circlePictureBox2 = new WinForm.UI.Controls.CirclePictureBox();
+            this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // fButton1
@@ -105,21 +107,6 @@ namespace WinForm.UI.Test
             this.fButton4.Text = "Toast";
             this.fButton4.Click += new System.EventHandler(this.fButton4_Click);
             // 
-            // circlePictureBox1
-            // 
-            this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
-            this.circlePictureBox1.IsSelected = false;
-            this.circlePictureBox1.Location = new System.Drawing.Point(568, 50);
-            this.circlePictureBox1.MouseMoveImage = null;
-            this.circlePictureBox1.Name = "circlePictureBox1";
-            this.circlePictureBox1.Radius = 20;
-            this.circlePictureBox1.SelectedImage = global::WinForm.UI.Test.Properties.Resources.main_light_bkg_top123;
-            this.circlePictureBox1.Size = new System.Drawing.Size(149, 149);
-            this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.circlePictureBox1.TabIndex = 6;
-            this.circlePictureBox1.TabStop = false;
-            this.circlePictureBox1.Click += new System.EventHandler(this.circlePictureBox1_Click);
-            // 
             // fButton5
             // 
             this.fButton5.BackColor = System.Drawing.Color.Black;
@@ -170,7 +157,7 @@ namespace WinForm.UI.Test
             this.fButton6.BackColor = System.Drawing.Color.Black;
             this.fButton6.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.fButton6.ForeColor = System.Drawing.Color.White;
-            this.fButton6.Location = new System.Drawing.Point(619, 274);
+            this.fButton6.Location = new System.Drawing.Point(190, 171);
             this.fButton6.Name = "fButton6";
             this.fButton6.Size = new System.Drawing.Size(98, 36);
             this.fButton6.TabIndex = 13;
@@ -180,11 +167,40 @@ namespace WinForm.UI.Test
             // loadingView2
             // 
             this.loadingView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.loadingView2.Location = new System.Drawing.Point(261, 209);
+            this.loadingView2.Enabled = false;
+            this.loadingView2.Location = new System.Drawing.Point(26, 171);
             this.loadingView2.Name = "loadingView2";
             this.loadingView2.Size = new System.Drawing.Size(158, 158);
             this.loadingView2.TabIndex = 14;
             this.loadingView2.Text = "loadingView2";
+            // 
+            // circlePictureBox2
+            // 
+            this.circlePictureBox2.Image = global::WinForm.UI.Test.Properties.Resources.img_download;
+            this.circlePictureBox2.IsSelected = false;
+            this.circlePictureBox2.Location = new System.Drawing.Point(357, 184);
+            this.circlePictureBox2.MouseMoveImage = global::WinForm.UI.Test.Properties.Resources.img_download_move;
+            this.circlePictureBox2.Name = "circlePictureBox2";
+            this.circlePictureBox2.SelectedImage = null;
+            this.circlePictureBox2.Size = new System.Drawing.Size(23, 23);
+            this.circlePictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.circlePictureBox2.TabIndex = 15;
+            this.circlePictureBox2.TabStop = false;
+            // 
+            // circlePictureBox1
+            // 
+            this.circlePictureBox1.Image = global::WinForm.UI.Test.Properties.Resources.default_head;
+            this.circlePictureBox1.IsSelected = false;
+            this.circlePictureBox1.Location = new System.Drawing.Point(568, 50);
+            this.circlePictureBox1.MouseMoveImage = null;
+            this.circlePictureBox1.Name = "circlePictureBox1";
+            this.circlePictureBox1.Radius = 20;
+            this.circlePictureBox1.SelectedImage = global::WinForm.UI.Test.Properties.Resources.main_light_bkg_top123;
+            this.circlePictureBox1.Size = new System.Drawing.Size(149, 149);
+            this.circlePictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.circlePictureBox1.TabIndex = 6;
+            this.circlePictureBox1.TabStop = false;
+            this.circlePictureBox1.Click += new System.EventHandler(this.circlePictureBox1_Click);
             // 
             // MainForm
             // 
@@ -193,6 +209,7 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.circlePictureBox2);
             this.Controls.Add(this.loadingView2);
             this.Controls.Add(this.fButton6);
             this.Controls.Add(this.fButton5);
@@ -205,8 +222,10 @@ namespace WinForm.UI.Test
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
+            this.TitleHeight = 25;
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,6 +247,7 @@ namespace WinForm.UI.Test
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
         private Controls.FButton fButton6;
         private Controls.LoadingView loadingView2;
+        private Controls.CirclePictureBox circlePictureBox2;
     }
 }
 

@@ -83,6 +83,26 @@ namespace WinForm.UI.Test.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap img_download {
+            get {
+                object obj = ResourceManager.GetObject("img_download", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap img_download_move {
+            get {
+                object obj = ResourceManager.GetObject("img_download_move", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap main_light_bkg_top123 {
             get {
                 object obj = ResourceManager.GetObject("main_light_bkg_top123", resourceCulture);

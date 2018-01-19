@@ -17,6 +17,10 @@ namespace WinForm.UI.Controls
     * */
     public class LoadingView : Control
     {
+
+        public new bool Enabled { get { return base.Enabled; } set { base.Enabled = value; if (value) Start(); else Stop(); } }
+
+
         private Point center = Point.Empty;
         private Dot[] dots = new Dot[6];
         private int DotSize = 10;
@@ -34,11 +38,11 @@ namespace WinForm.UI.Controls
                ControlStyles.DoubleBuffer, true);
             //强制分配样式重新应用到控件上
             UpdateStyles();
-
             timer = new Timer();
             timer.Interval = 5;
             timer.Tick += Timer_Tick;
             base.Size = new Size(200, 200);
+            Enabled = false;
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -55,15 +59,15 @@ namespace WinForm.UI.Controls
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
             ////绘制边框
-            Pen pen = new Pen(Color.FromArgb(100, 100, 100));
-            Point[] point = new Point[4];
-            point[0] = new Point(0, 0);
-            point[1] = new Point(Width - 1, 0);
-            point[2] = new Point(Width - 1, Height - 1);
-            point[3] = new Point(0, Height - 1);
-            g.DrawPolygon(pen, point);
+            //Pen pen = new Pen(Color.FromArgb(100, 100, 100));
+            //Point[] point = new Point[4];
+            //point[0] = new Point(0, 0);
+            //point[1] = new Point(Width - 1, 0);
+            //point[2] = new Point(Width - 1, Height - 1);
+            //point[3] = new Point(0, Height - 1);
+            //g.DrawPolygon(pen, point);
 
-            DrawPoint(g, center);
+            //DrawPoint(g, center);
 
             foreach (Dot item in dots)
             {
@@ -152,7 +156,7 @@ namespace WinForm.UI.Controls
             oldSize = base.Size;
             center = new Point(this.Width / 2 - DotSize / 2, this.Height / 2 - DotSize / 2);
             //圆点默认位置
-            Point defaultPoint = new Point(this.Width / 2 - DotSize / 2, this.Height-20);
+            Point defaultPoint = new Point(this.Width / 2 - DotSize / 2, this.Height - 20);
             for (int i = 0; i < dots.Length; i++)
             {
                 dots[i] = new Dot(defaultPoint);
@@ -164,6 +168,20 @@ namespace WinForm.UI.Controls
 
         public void Start()
         {
+            if (!timer.Enabled)
+            {
+                this.Visible = true;
+                foreach (Dot item in dots)
+                {
+                    item.Move();
+                }
+                timer.Start();
+            }
+        }
+
+
+        public void Stop()
+        {
             if (timer.Enabled)
             {
                 foreach (Dot item in dots)
@@ -171,15 +189,9 @@ namespace WinForm.UI.Controls
                     item.Stop();
                 }
                 timer.Stop();
-                return;
+                this.Visible = false;
             }
-            foreach (Dot item in dots)
-            {
-                item.Move();
-            }
-            timer.Start();
         }
-
 
     }
 }

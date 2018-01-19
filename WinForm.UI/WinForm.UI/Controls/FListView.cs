@@ -311,6 +311,7 @@ namespace WinForm.UI.Controls
         {
             base.OnMouseLeave(e);
             MouseHolder = null;
+            this.Invalidate();
         }
 
         protected override void OnMouseClick(MouseEventArgs e)

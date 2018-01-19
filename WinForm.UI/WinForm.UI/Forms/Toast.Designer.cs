@@ -48,7 +48,7 @@
             // 
             // Toast
             // 
-            this._IsTitle = false;
+            this.TitleVisible = false;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(200, 50);

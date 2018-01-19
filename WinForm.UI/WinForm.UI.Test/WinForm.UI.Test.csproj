@@ -114,6 +114,8 @@
     <None Include="Resources\Crystal Liu2.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\img_download.png" />
+    <Content Include="Resources\img_download_move.png" />
     <Content Include="screenshot\form.png" />
     <Content Include="screenshot\listview.png" />
     <Content Include="screenshot\table.png" />

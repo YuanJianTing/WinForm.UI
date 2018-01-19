@@ -124,35 +124,35 @@ namespace WinForm.UI
         }
 
 
-        private bool defaultTitleIsCenter = false;
+        private bool defaultTitleCenter = false;
         /// <summary>
         /// 标题默认是否居中
         /// </summary>
-        public bool TitleIsCenter
+        public bool TitleCenter
         {
-            get { return defaultTitleIsCenter; }
-            set { defaultTitleIsCenter = value; }
+            get { return defaultTitleCenter; }
+            set { defaultTitleCenter = value; }
         }
 
-        private bool defaultIsTitle = true;
+        private bool defaultTitleVisible = true;
         /// <summary>
         /// 默认是否显示标题
         /// </summary>
-        public bool IsTitle
+        public bool TitleVisible
         {
-            get { return defaultIsTitle; }
-            set { defaultIsTitle = value; }
+            get { return defaultTitleVisible; }
+            set { defaultTitleVisible = value; }
         }
 
 
-        private bool defaultIsLogo = true;
+        private bool defaultLogoVisible = true;
         /// <summary>
         /// 默认是否显示logo
         /// </summary>
-        public bool IsLogo
+        public bool LogoVisible
         {
-            get { return defaultIsLogo; }
-            set { defaultIsLogo = value; }
+            get { return defaultLogoVisible; }
+            set { defaultLogoVisible = value; }
         }
 
 
@@ -176,6 +176,15 @@ namespace WinForm.UI
             set { defaultMinimizeBox = value; }
         }
 
+        private int defaultTitleButtonWidth = 30;
+        /// <summary>
+        /// 设置默认标题栏按钮宽
+        /// </summary>
+        public int TitleButtonWidth
+        {
+            get { return defaultTitleButtonWidth; }
+            set { defaultTitleButtonWidth = value; }
+        }
 
         private Image defaultMaxBoxImage = null;
         /// <summary>

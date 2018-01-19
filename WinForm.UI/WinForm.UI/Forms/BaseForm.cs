@@ -20,6 +20,12 @@ namespace WinForm.UI.Forms
 
         private static Style builder = FormsManager.Style;
 
+        //标题栏操作按钮宽
+        private int titleButtonWidth = 30;
+        [Category("Title"),
+       Description("获取或设置标题栏按钮宽"),
+      DefaultValue(typeof(int), "30")]
+        public int TitleButtonWidth { get { return titleButtonWidth; } set { if (titleButtonWidth == value) return; titleButtonWidth = value; this.Invalidate(); } }
 
         private bool dragSize = builder.DragSize;
         [Category("Skin")]
@@ -65,20 +71,20 @@ namespace WinForm.UI.Forms
 
         public override string Text { get { return base.Text; } set { base.Text = value; this.Invalidate(); } }
 
-        private bool TitleIsCenter = builder.TitleIsCenter;//标题是否居中
+        private bool titleCenter = builder.TitleCenter;//标题是否居中
         [Category("Title")]
         [Description("标题是否居中")]
-        public bool _TitleIsCenter { get { return TitleIsCenter; } set { TitleIsCenter = value; this.Invalidate(); } }
+        public bool TitleCenter { get { return titleCenter; } set { if (titleCenter == value) return; titleCenter = value; this.Invalidate(); } }
 
-        private bool IsTitle = builder.IsTitle;//是否显示标题
+        private bool titleVisible = builder.TitleVisible;//是否显示标题
         [Category("Title")]
         [Description("是否显示标题")]
-        public bool _IsTitle { get { return IsTitle; } set { IsTitle = value; this.Invalidate(); } }
-
-        private bool isLogo = builder.IsLogo;//是否显示标题
+        public bool TitleVisible { get { return titleVisible; } set { if (titleVisible == value) return; titleVisible = value; this.Invalidate(); } }
+        
+        private bool logoVisible = builder.LogoVisible;//是否显示标题
         [Category("Title")]
         [Description("是否显示logo")]
-        public bool IsLogo { get { return isLogo; } set { isLogo = value; this.Invalidate(); } }
+        public bool LogoVisible { get { return logoVisible; } set { if (logoVisible == value) return; logoVisible = value; this.Invalidate(); } }
 
         private bool maximazeBox = builder.MaximizeBox;
         [Category("Title"),
@@ -173,7 +179,9 @@ namespace WinForm.UI.Forms
         private ButtonState _buttonState = ButtonState.None;
         private bool _maximized = true;
 
+
         private Animation animation;
+        [Browsable(false)]
         public Animation Animation
         {
             get { return animation; }
@@ -194,9 +202,9 @@ namespace WinForm.UI.Forms
             this.Font = builder.Font;
             this.ForeColor = builder.ForeColor;
             this.titleBackColor = builder.TitleBackColor;
-            this.TitleIsCenter = builder.TitleIsCenter;
-            this.IsTitle = builder.IsTitle;
-            this.isLogo = builder.IsLogo;
+            this.titleCenter = builder.TitleCenter;
+            this.titleVisible = builder.TitleVisible;
+            this.logoVisible = builder.LogoVisible;
             this.maximazeBox = builder.MaximizeBox;
             this.minimazeBox = builder.MinimizeBox;
             this.maxBoxImage = builder.MaxBoxImage;
@@ -212,6 +220,7 @@ namespace WinForm.UI.Forms
             this.BackColor = builder.FormBackColor;
             this.titleForeColor = builder.TitleForeColor;
             this.titleHeight = builder.TitleHeight;
+            this.titleButtonWidth = builder.TitleButtonWidth;
 
             Application.AddMessageFilter(new MouseMessageFilter());
             MouseMessageFilter.MouseMove += OnGlobalMouseMove;
@@ -219,9 +228,9 @@ namespace WinForm.UI.Forms
             //减少闪烁
             SetStyles();
             Title = new Rectangle(0, 0, this.Width, titleHeight);
-            _xButtonBounds = new Rectangle(this.Width - titleHeight, 0, titleHeight, titleHeight);
-            _maxButtonBounds = new Rectangle(_xButtonBounds.X - titleHeight, 0, titleHeight, titleHeight);
-            _minButtonBounds = new Rectangle(_maxButtonBounds.X - titleHeight, 0, titleHeight, titleHeight);
+            _xButtonBounds = new Rectangle(this.Width - titleButtonWidth, 0, titleButtonWidth, titleHeight);
+            _maxButtonBounds = new Rectangle(_xButtonBounds.X - titleButtonWidth, 0, titleButtonWidth, titleHeight);
+            _minButtonBounds = new Rectangle(_maxButtonBounds.X - titleButtonWidth, 0, titleButtonWidth, titleHeight);
 
 
             //窗体关闭时
@@ -249,7 +258,7 @@ namespace WinForm.UI.Forms
         {
             //e.Graphics.TextRenderingHint = TextRenderingHint.AntiAlias;
             //base.OnPaint(e);
-            if (IsTitle)
+            if (titleVisible)
             {
                 DrawTitle(e.Graphics);
             }
@@ -373,7 +382,7 @@ namespace WinForm.UI.Forms
                     g.FillRectangle(bg, Title);
                 }
             }
-            if (isLogo)
+            if (logoVisible)
             {
                 //绘制标题和logo
                 DrawTextAndLogo(g);
@@ -388,9 +397,9 @@ namespace WinForm.UI.Forms
             bool showMax = MaximizeBox && ControlBox;
 
             Font font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            _xButtonBounds.X = this.Width - titleHeight;
-            _maxButtonBounds.X = _xButtonBounds.X - titleHeight;
-            _minButtonBounds.X = _maxButtonBounds.X - titleHeight;
+            _xButtonBounds.X = this.Width - titleButtonWidth;
+            _maxButtonBounds.X = _xButtonBounds.X - titleButtonWidth;
+            _minButtonBounds.X = _maxButtonBounds.X - titleButtonWidth;
 
 
             Brush hoverBrush = new SolidBrush(Color.Transparent);
@@ -481,7 +490,7 @@ namespace WinForm.UI.Forms
             using (Brush bg = new SolidBrush(this.TitleForeColor))
             {
                 SizeF sizef = g.MeasureString(this.Text, this.Font);
-                if (!TitleIsCenter)
+                if (!titleCenter)
                 {
                     g.DrawString(this.Text, this.Font, bg, 25, titleHeight / 2 - sizef.Height / 2);
                     //绘制logo
@@ -585,7 +594,7 @@ namespace WinForm.UI.Forms
         {
             base.OnCreateControl();
             SetReion();
-            
+
         }
 
         //圆角

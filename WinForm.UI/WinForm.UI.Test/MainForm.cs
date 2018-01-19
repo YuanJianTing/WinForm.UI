@@ -64,8 +64,9 @@ namespace WinForm.UI.Test
 
         private void fButton6_Click(object sender, EventArgs e)
         {
+            loadingView2.Enabled = (!loadingView2.Enabled);
             //loadingView1.Start();
-            loadingView2.Start();
+            //loadingView2.Start();
         }
     }
 }

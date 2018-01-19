@@ -77,23 +77,12 @@ namespace WinForm.UI.Controls
 
             base.OnPaint(pe);
         }
-
-        private void DrowImage(Graphics g)
-        {
-            Rectangle rect = new Rectangle(0, 0, Image.Width, Image.Height);
-            //GraphicsPath path = GraphicsPathHelper.DrawRoundRect(0,0, this.Width, this.Height,10);
-            GraphicsPath path = GraphicsPathHelper.CreatePath(rect, 10, RoundStyle.All, true);
-            g.SetClip(path);
-            g.DrawImage(Image, 0, 0);
-            //g.DrawImageUnscaledAndClipped(Image, rect);
-        }
-
-
+        
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
 
-            MouseMove += (obj, e) =>
+            MouseEnter += (obj, e) =>
             {
                 if (mouseMoveImage != null)
                 {
@@ -101,6 +90,7 @@ namespace WinForm.UI.Controls
                     base.Image = mouseMoveImage;
                 }
             };
+            
 
             MouseLeave += (obj, e) =>
             {
