@@ -43,8 +43,8 @@ namespace WinForm.UI.Test
             this.黏贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.test1 = new WinForm.UI.Test.Test();
-            this.loadingView1 = new WinForm.UI.Controls.LoadingView();
+            this.fButton6 = new WinForm.UI.Controls.FButton();
+            this.loadingView1 = new WinForm.UI.Test.LoadingView();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -165,24 +165,26 @@ namespace WinForm.UI.Test
             this.刷新ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.刷新ToolStripMenuItem.Text = "刷新";
             // 
-            // test1
+            // fButton6
             // 
-            this.test1.BackColor = System.Drawing.Color.Gainsboro;
-            this.test1.ForeColor = System.Drawing.Color.Red;
-            this.test1.Location = new System.Drawing.Point(204, 271);
-            this.test1.Name = "test1";
-            this.test1.Size = new System.Drawing.Size(151, 55);
-            this.test1.TabIndex = 12;
-            this.test1.Text = "test1";
-            this.test1.Click += new System.EventHandler(this.test1_Click);
+            this.fButton6.BackColor = System.Drawing.Color.Black;
+            this.fButton6.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.fButton6.ForeColor = System.Drawing.Color.White;
+            this.fButton6.Location = new System.Drawing.Point(619, 274);
+            this.fButton6.Name = "fButton6";
+            this.fButton6.Size = new System.Drawing.Size(98, 36);
+            this.fButton6.TabIndex = 13;
+            this.fButton6.Text = "开 始";
+            this.fButton6.Click += new System.EventHandler(this.fButton6_Click);
             // 
             // loadingView1
             // 
-            this.loadingView1.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.loadingView1.Location = new System.Drawing.Point(437, 236);
+            this.loadingView1.BackColor = System.Drawing.Color.Black;
+            this.loadingView1.Color = System.Drawing.Color.White;
+            this.loadingView1.Location = new System.Drawing.Point(265, 171);
             this.loadingView1.Name = "loadingView1";
-            this.loadingView1.Size = new System.Drawing.Size(214, 207);
-            this.loadingView1.TabIndex = 13;
+            this.loadingView1.Size = new System.Drawing.Size(274, 274);
+            this.loadingView1.TabIndex = 12;
             this.loadingView1.Text = "loadingView1";
             // 
             // MainForm
@@ -192,8 +194,8 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.fButton6);
             this.Controls.Add(this.loadingView1);
-            this.Controls.Add(this.test1);
             this.Controls.Add(this.fButton5);
             this.Controls.Add(this.circlePictureBox1);
             this.Controls.Add(this.fButton4);
@@ -220,13 +222,13 @@ namespace WinForm.UI.Test
         private Controls.FButton fButton4;
         private Controls.CirclePictureBox circlePictureBox1;
         private Controls.FButton fButton5;
-        private Test test1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 黏贴ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
-        private Controls.LoadingView loadingView1;
+        private LoadingView loadingView1;
+        private Controls.FButton fButton6;
     }
 }
 

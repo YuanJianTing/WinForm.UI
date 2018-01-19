@@ -61,5 +61,10 @@ namespace WinForm.UI.Test
         {
             this.circlePictureBox1.IsSelected = (!this.circlePictureBox1.IsSelected);
         }
+
+        private void fButton6_Click(object sender, EventArgs e)
+        {
+            loadingView1.Start();
+        }
     }
 }
