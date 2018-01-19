@@ -31,8 +31,8 @@ namespace WinForm.UI.Controls
         private int dueTime = 5;
         public int DueTime { get { return dueTime; } set { dueTime = value; } }
         //执行间隔
-        private int period = 50;
-
+        private int period = 30;
+        private int MaxSpeed = 30;//最大速度
         public Dot(Point initial)
         {
             DefaultPoint = initial;
@@ -41,13 +41,20 @@ namespace WinForm.UI.Controls
 
         public void Move()
         {
-            Console.WriteLine(dueTime);
             MoveTimer = new Timer((obj) =>
             {
                 if (angle > 360)
                     angle = 0;
                 point = PointRotate(center, DefaultPoint, angle);
-                angle ++;
+                angle += 4;
+                if (angle > 30 && angle < 290 && period == 1)
+                {
+                    SubSpeed();
+                }
+                else if (angle > 290 && angle < 360 && period != 1)
+                {
+                    AddSpeed();
+                }
 
             }, null, dueTime, period);
         }
@@ -55,10 +62,21 @@ namespace WinForm.UI.Controls
         public void Stop()
         {
             MoveTimer.Dispose();
+            dueTime = 0;
         }
 
 
+        public void AddSpeed()
+        {
+            period = 1;
+            MoveTimer.Change(0, period);
+        }
 
+        public void SubSpeed()
+        {
+            period = MaxSpeed;
+            MoveTimer.Change(0, period);
+        }
 
         /// <summary>  
         /// 对一个坐标点按照一个中心进行旋转  

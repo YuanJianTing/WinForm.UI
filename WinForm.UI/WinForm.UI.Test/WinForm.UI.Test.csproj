@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common.cs" />
-    <Compile Include="Dot.cs" />
     <Compile Include="Entity\Contart.cs" />
     <Compile Include="Entity\RContact.cs" />
     <Compile Include="Entity\TradeBean.cs" />
@@ -58,9 +57,6 @@
     </Compile>
     <Compile Include="ListViewForm.Designer.cs">
       <DependentUpon>ListViewForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LoadingView.cs">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

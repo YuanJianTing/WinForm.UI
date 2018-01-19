@@ -18,7 +18,7 @@ namespace WinForm.UI.Controls
     public class LoadingView : Control
     {
         private Point center = Point.Empty;
-        private Dot[] dots = new Dot[5];
+        private Dot[] dots = new Dot[6];
         private int DotSize = 10;
 
         private Timer timer;
@@ -38,12 +38,13 @@ namespace WinForm.UI.Controls
             timer = new Timer();
             timer.Interval = 5;
             timer.Tick += Timer_Tick;
-
+            base.Size = new Size(200, 200);
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            this.Invalidate();
+            if (this.Visible)
+                this.Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -53,7 +54,7 @@ namespace WinForm.UI.Controls
             g.Clear(Parent.BackColor);
 
             g.SmoothingMode = SmoothingMode.AntiAlias;
-            //绘制边框
+            ////绘制边框
             Pen pen = new Pen(Color.FromArgb(100, 100, 100));
             Point[] point = new Point[4];
             point[0] = new Point(0, 0);
@@ -61,14 +62,14 @@ namespace WinForm.UI.Controls
             point[2] = new Point(Width - 1, Height - 1);
             point[3] = new Point(0, Height - 1);
             g.DrawPolygon(pen, point);
-            
+
             DrawPoint(g, center);
 
             foreach (Dot item in dots)
             {
                 DrawPoint(g, item.Point);
             }
-            
+
             g.SmoothingMode = SmoothingMode.None;
 
             //if (Mouse != Point.Empty)
@@ -125,23 +126,39 @@ namespace WinForm.UI.Controls
         {
             base.OnCreateControl();
 
-            center = new Point(this.Width / 2 - DotSize/2, this.Height / 2 - DotSize/2);
-            //圆点默认位置
-            Point defaultPoint = new Point(this.Width/2- DotSize/2, this.Height-20);
 
+
+            //center = new Point(this.Width / 2 - DotSize / 2, this.Height / 2 - DotSize / 2);
+            ////圆点默认位置
+            //Point defaultPoint = new Point(this.Width / 2 - DotSize / 2, this.Height - 20);
+
+            //for (int i = 0; i < dots.Length; i++)
+            //{
+            //    dots[i] = new Dot(defaultPoint);
+            //    dots[i].center = center;
+            //    dots[i].DueTime = i * 150;
+            //}
+        }
+
+        private Size oldSize = new Size(200, 200);
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            if (this.Size.Width != oldSize.Width)
+                base.Size = new Size(this.Width, this.Width);
+            else if (this.Size.Height != oldSize.Height)
+                base.Size = new Size(this.Height, this.Height);
+            oldSize = base.Size;
+            center = new Point(this.Width / 2 - DotSize / 2, this.Height / 2 - DotSize / 2);
+            //圆点默认位置
+            Point defaultPoint = new Point(this.Width / 2 - DotSize / 2, this.Height-20);
             for (int i = 0; i < dots.Length; i++)
             {
                 dots[i] = new Dot(defaultPoint);
                 dots[i].center = center;
-                dots[i].DueTime = i * 700;
+                dots[i].DueTime = i * 150;
             }
-        }
-
-
-        protected override void OnClick(EventArgs e)
-        {
-            base.OnClick(e);
-            Start();
         }
 
 

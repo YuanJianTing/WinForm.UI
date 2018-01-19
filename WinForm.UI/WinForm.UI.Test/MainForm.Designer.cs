@@ -44,7 +44,7 @@ namespace WinForm.UI.Test
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fButton6 = new WinForm.UI.Controls.FButton();
-            this.loadingView1 = new WinForm.UI.Test.LoadingView();
+            this.loadingView2 = new WinForm.UI.Controls.LoadingView();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -177,15 +177,14 @@ namespace WinForm.UI.Test
             this.fButton6.Text = "开 始";
             this.fButton6.Click += new System.EventHandler(this.fButton6_Click);
             // 
-            // loadingView1
+            // loadingView2
             // 
-            this.loadingView1.BackColor = System.Drawing.Color.Black;
-            this.loadingView1.Color = System.Drawing.Color.White;
-            this.loadingView1.Location = new System.Drawing.Point(265, 171);
-            this.loadingView1.Name = "loadingView1";
-            this.loadingView1.Size = new System.Drawing.Size(274, 274);
-            this.loadingView1.TabIndex = 12;
-            this.loadingView1.Text = "loadingView1";
+            this.loadingView2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.loadingView2.Location = new System.Drawing.Point(261, 209);
+            this.loadingView2.Name = "loadingView2";
+            this.loadingView2.Size = new System.Drawing.Size(158, 158);
+            this.loadingView2.TabIndex = 14;
+            this.loadingView2.Text = "loadingView2";
             // 
             // MainForm
             // 
@@ -194,8 +193,8 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.loadingView2);
             this.Controls.Add(this.fButton6);
-            this.Controls.Add(this.loadingView1);
             this.Controls.Add(this.fButton5);
             this.Controls.Add(this.circlePictureBox1);
             this.Controls.Add(this.fButton4);
@@ -227,8 +226,8 @@ namespace WinForm.UI.Test
         private System.Windows.Forms.ToolStripMenuItem 黏贴ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
-        private LoadingView loadingView1;
         private Controls.FButton fButton6;
+        private Controls.LoadingView loadingView2;
     }
 }
 
