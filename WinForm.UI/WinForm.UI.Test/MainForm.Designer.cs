@@ -46,6 +46,7 @@ namespace WinForm.UI.Test
             this.loadingView2 = new WinForm.UI.Controls.LoadingView();
             this.circlePictureBox2 = new WinForm.UI.Controls.CirclePictureBox();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
+            this.newLoadingView1 = new WinForm.UI.Controls.LoadingView();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
@@ -202,6 +203,15 @@ namespace WinForm.UI.Test
             this.circlePictureBox1.TabStop = false;
             this.circlePictureBox1.Click += new System.EventHandler(this.circlePictureBox1_Click);
             // 
+            // newLoadingView1
+            // 
+            this.newLoadingView1.Enabled = false;
+            this.newLoadingView1.Location = new System.Drawing.Point(487, 120);
+            this.newLoadingView1.Name = "newLoadingView1";
+            this.newLoadingView1.Size = new System.Drawing.Size(244, 244);
+            this.newLoadingView1.TabIndex = 16;
+            this.newLoadingView1.Text = "newLoadingView1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -209,6 +219,7 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.newLoadingView1);
             this.Controls.Add(this.circlePictureBox2);
             this.Controls.Add(this.loadingView2);
             this.Controls.Add(this.fButton6);
@@ -248,6 +259,7 @@ namespace WinForm.UI.Test
         private Controls.FButton fButton6;
         private Controls.LoadingView loadingView2;
         private Controls.CirclePictureBox circlePictureBox2;
+        private Controls.LoadingView newLoadingView1;
     }
 }
 
