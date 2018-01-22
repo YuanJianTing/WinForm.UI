@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WinForm.UI.Properties;
+using System.Drawing.Drawing2D;
 
 namespace WinForm.UI.Controls
 {
@@ -17,13 +18,14 @@ namespace WinForm.UI.Controls
         EventHandler ImageEvent = null;
 
         private bool isRunning = false;
-
         [Category("Skin")]
         [Description("获取当前控件是否正在运行")]
         [DefaultValue(typeof(bool), "false")]
-        public bool IsRunning { get { return isRunning; }}
+        public bool IsRunning { get { return isRunning; } }
 
-        public new bool Enabled { get { return base.Enabled; } set { if (value == base.Enabled) return; base.Enabled = value; if (value) isRunning = true;  else isRunning=false; this.Invalidate(); } }
+        public new bool Enabled { get { return base.Enabled; } set { if (value == base.Enabled) return; base.Enabled = value; if (value) isRunning = true; else isRunning = false; this.Invalidate(); } }
+
+
 
 
         public LoadingView()
@@ -56,12 +58,14 @@ namespace WinForm.UI.Controls
 
         private void OnFrameChanged(object sender, EventArgs e)
         {
-            Invalidate();
+            if (Visible)
+                Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
+            Graphics g = e.Graphics;
             e.Graphics.Clear(Parent.BackColor);
             if (isRunning)
             {
@@ -71,8 +75,12 @@ namespace WinForm.UI.Controls
                 ImageAnimator.UpdateFrames();
             }
             //Draw the next frame in the animation.
-            Point point = new Point(this.Width/2- animatedImage.Width/2,this.Height/2- animatedImage.Height/2);
-            e.Graphics.DrawImage(this.animatedImage, point);
+            Rectangle rect = new Rectangle(0,0, this.Width, this.Height);
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.CompositingQuality = CompositingQuality.HighQuality;
+
+            g.DrawImage(animatedImage, rect, new Rectangle(0, 0, animatedImage.Width, animatedImage.Height), GraphicsUnit.Pixel);
 
         }
 
@@ -89,8 +97,17 @@ namespace WinForm.UI.Controls
             if (!isRunning)
                 return;
             isRunning = false;
+            Visible = false;
+        }
+
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            base.Size = new Size(this.Width,this.Width);
         }
 
     }
+
 
 }
