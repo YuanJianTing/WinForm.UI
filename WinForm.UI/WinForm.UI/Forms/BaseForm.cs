@@ -339,30 +339,42 @@ namespace WinForm.UI.Forms
                 {
                     _buttonState = ButtonState.MinOver;
 
-                    if (oldState == ButtonState.MinDown && up)
-                        WindowState = FormWindowState.Minimized;
+                     if (oldState == ButtonState.MinDown && up)
+                    {
+                        if (!OnWindoewsEvent(oldState))
+                            WindowState = FormWindowState.Minimized;
+                    }
                 }
                 else if (showMin && showMax && _minButtonBounds.Contains(e.Location))
                 {
                     _buttonState = ButtonState.MinOver;
 
                     if (oldState == ButtonState.MinDown && up)
-                        WindowState = FormWindowState.Minimized;
+                    {
+                        if (!OnWindoewsEvent(oldState))
+                            WindowState = FormWindowState.Minimized;
+                    }
                 }
                 else if (MaximizeBox && ControlBox && _maxButtonBounds.Contains(e.Location))
                 {
                     _buttonState = ButtonState.MaxOver;
 
-                    if (oldState == ButtonState.MaxDown && up)
-                        MaximizeWindow();
+                   if (oldState == ButtonState.MaxDown && up)
+                    {
+                        if (!OnWindoewsEvent(oldState))
+                            MaximizeWindow();
+                    }
 
                 }
                 else if (ControlBox && _xButtonBounds.Contains(e.Location))
                 {
                     _buttonState = ButtonState.XDown;
 
-                    if (oldState == ButtonState.XDown && up)
-                        Close();
+                     if (oldState == ButtonState.XDown && up)
+                    {
+                        if (!OnWindoewsEvent(oldState))
+                            Close();
+                    }
                 }
                 else _buttonState = ButtonState.None;
             }
@@ -695,7 +707,17 @@ namespace WinForm.UI.Forms
         }
         #endregion
 
-        private enum ButtonState
+        /// <summary>
+        /// 窗口操作
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns>返回 true则拦截操作 false 则继续</returns>
+        protected virtual bool OnWindoewsEvent(ButtonState state)
+        {
+            return false;
+        }
+
+        public enum ButtonState
         {
             XOver,
             MaxOver,
