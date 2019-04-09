@@ -16,10 +16,15 @@ namespace WinForm.UI.Controls
     * */
     public abstract class Adapter
     {
+        public event Action OnNotifyDataSetChanged;
+
 
         public abstract int GetCount();
 
         public abstract void GetView(int position, ViewHolder holder, Graphics g);
+
+        public abstract int GetRowHeight(int position);
+
 
         protected Control owner;
         internal Control Owner
@@ -31,6 +36,7 @@ namespace WinForm.UI.Controls
         {
             if (owner != null)
                 owner.Invalidate();
+            OnNotifyDataSetChanged?.Invoke();
         }
 
 

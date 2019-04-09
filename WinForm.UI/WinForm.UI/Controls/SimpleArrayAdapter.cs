@@ -97,5 +97,10 @@ namespace WinForm.UI.Controls
                 g.FillRectangle(sb, newRec);
             }
         }
+
+        public override int GetRowHeight(int position)
+        {
+            return 50;
+        }
     }
 }

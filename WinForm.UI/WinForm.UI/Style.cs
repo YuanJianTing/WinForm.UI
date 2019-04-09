@@ -247,7 +247,7 @@ namespace WinForm.UI
             set { defaultMinBoxBackColor = value; }
         }
 
-        private Color defaultCloseBoxBackColor = Color.FromArgb(212, 64, 39);
+        private Color defaultCloseBoxBackColor = Color.FromArgb(244, 84, 84);
         /// <summary>
         /// 设置默认窗体关闭按钮背景颜色
         /// </summary>

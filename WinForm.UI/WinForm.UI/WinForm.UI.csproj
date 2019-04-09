@@ -49,7 +49,6 @@
     <Compile Include="Controls\CirclePictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\Dot.cs" />
     <Compile Include="Controls\FErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinForm.UI.Animations
@@ -17,6 +18,7 @@ namespace WinForm.UI.Animations
     public class AnimationManager
     {
         private Timer _animationTimer;
+
         private Control owner;
 
         private double Progress = 0;
@@ -34,6 +36,8 @@ namespace WinForm.UI.Animations
             _animationTimer = new Timer();
             _animationTimer.Interval = 5;
             _animationTimer.Tick += AnimationTimerOnTick;
+
+
         }
 
         private void AnimationTimerOnTick(object sender, EventArgs eventArgs)

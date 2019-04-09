@@ -65,8 +65,6 @@ namespace WinForm.UI.Test
 
         public override void GetView(int position, ViewHolder holder, Graphics g)
         {
-            holder.bounds.Height = 65;
-
             Contart bean = GetItem(position) as Contart;
             holder.UserData = bean;
             Color c = SubItemBackColor;
@@ -120,5 +118,9 @@ namespace WinForm.UI.Test
 
         }
 
+        public override int GetRowHeight(int position)
+        {
+            return 65;
+        }
     }
 }

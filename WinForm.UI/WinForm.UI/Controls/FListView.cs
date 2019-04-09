@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForm.UI.Animations;
 using WinForm.UI.Events;
@@ -183,6 +184,11 @@ namespace WinForm.UI.Controls
 
         #endregion
 
+        /// <summary>
+        /// 鼠标是否在当前控件中
+        /// </summary>
+        private bool MouseVisible = false;
+        private bool scrollBottom = false;
         #endregion
 
 
@@ -197,7 +203,28 @@ namespace WinForm.UI.Controls
                     return;
                 adapter = value;
                 adapter.Owner = this;
+                adapter.OnNotifyDataSetChanged += Adapter_OnNotifyDataSetChanged;
             }
+        }
+        private void Adapter_OnNotifyDataSetChanged()
+        {
+            if (!scrollBottom || VirtualHeight == 0)
+                return;
+            //VirtualHeight = 0;
+            ////计算滚动条高
+            //if (adapter == null || adapter.GetCount() == 0)
+            //{
+            //    return;
+            //}
+
+            //for (int i = 0; i < adapter.GetCount(); i++)
+            //{
+            //    VirtualHeight += adapter.GetRowHeight(i);
+            //    VirtualHeight += itemDivider;
+            //}
+            chatVScroll.VirtualHeight = VirtualHeight;
+            int max = VirtualHeight - this.Height;
+            chatVScroll.Value = max;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -217,18 +244,20 @@ namespace WinForm.UI.Controls
                 point[3] = new Point(0, Height - 1);
                 g.DrawPolygon(pen, point);//
             }
-
             g.TranslateTransform(-listHScroll.Value, 0);        //根据滚动条的值设置坐标偏移
             g.TranslateTransform(0, -chatVScroll.Value);        //根据滚动条的值设置坐标偏移
             DrawColumn(g);
             g.ResetTransform();             //重置坐标系
-            chatVScroll.VirtualHeight = VirtualHeight;   //绘制完成计算虚拟高度决定是否绘制滚动条
-            if (chatVScroll.Visible)   //是否绘制滚动条
+
+            if (!scrollBottom)
+                chatVScroll.VirtualHeight = VirtualHeight + 5;   //绘制完成计算虚拟高度决定是否绘制滚动条
+            if (MouseVisible && chatVScroll.Visible)   //是否绘制滚动条
                 chatVScroll.ReDrawScroll(g);
 
             listHScroll.VirtualWidth = VirtualWidth;
-            if (listHScroll.Visible)
+            if (MouseVisible && listHScroll.Visible)
                 listHScroll.ReDrawScroll(g);
+
         }
 
         #region 绘制行列
@@ -254,11 +283,11 @@ namespace WinForm.UI.Controls
                     holder.bounds.X = 1;
                     holder.bounds.Y = y;
                     holder.bounds.Width = this.Width - 2;
-                    holder.bounds.Height = 50;
+                    holder.bounds.Height = adapter.GetRowHeight(i);
                 }
                 else
                 {
-                    Rectangle rect = new Rectangle(1, y, this.Width - 2, 50);
+                    Rectangle rect = new Rectangle(1, y, this.Width - 2, adapter.GetRowHeight(i));
                     holder = new ViewHolder(rect);
                     holder.position = i;
                     Rows.Add(holder);
@@ -306,37 +335,54 @@ namespace WinForm.UI.Controls
             }
             base.OnMouseMove(e);
         }
+        //鼠标进入
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            MouseVisible = true;
+
+        }
+
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
             MouseHolder = null;
+
+            MouseVisible = false;
             this.Invalidate();
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
-
             base.OnMouseClick(e);
+
+            if (e.Button == MouseButtons.Left)
+            {
+                if (chatVScroll.IsMouseDown|| chatVScroll.IsMouseOnSlider)
+                    return;
+
+                foreach (ViewHolder item in Rows)
+                {
+                    if (item.bounds.Contains(m_ptMousePos))
+                    {
+                        SelectHolder = item;
+                        SelectHolder.MouseLocation = e.Location;
+                        if (item != SelectHolder)
+                        {
+                            this.Invalidate();
+                        }
+                        OnItemClick(new ItemClickEventArgs(item));
+                        break;
+                    }
+                }
+            }
+
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             this.Focus();
-            foreach (ViewHolder item in Rows)
-            {
-                if (item.bounds.Contains(m_ptMousePos))
-                {
-                    SelectHolder = item;
-                    SelectHolder.MouseLocation = e.Location;
-                    if (item != SelectHolder)
-                    {
-                        this.Invalidate();
-                    }
-                    OnItemClick(new ItemClickEventArgs(item));
-                    break;
-                }
-            }
             base.OnMouseDown(e);
         }
         /// <summary>
@@ -344,12 +390,11 @@ namespace WinForm.UI.Controls
         /// </summary>
         public void ScrollBottom(int time = 50)
         {
-            new Thread(() =>
-            {
-                Thread.Sleep(time);//停止50毫秒 否则 如果在add之后执行这无法显示最后一条
-                chatVScroll.Value = chatVScroll.VirtualHeight - this.Height - 5;
+            new Task(()=> {
+                Thread.Sleep(time);
+                scrollBottom = true;
+                Adapter_OnNotifyDataSetChanged();
             }).Start();
-
         }
 
 

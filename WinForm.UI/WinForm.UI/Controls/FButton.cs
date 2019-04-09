@@ -111,6 +111,7 @@ namespace WinForm.UI.Controls
         [DefaultValue(typeof(ContentAlignment), "32")]
         public ContentAlignment ImageAlign { get { return imageAlign; } set { imageAlign = value; this.Invalidate(); } }
 
+
         #endregion
 
         private AnimationManager _animationManager;
@@ -125,6 +126,7 @@ namespace WinForm.UI.Controls
                 ControlStyles.OptimizedDoubleBuffer |
                 ControlStyles.ResizeRedraw |
                 ControlStyles.SupportsTransparentBackColor |
+                ControlStyles.Selectable|
                 ControlStyles.DoubleBuffer, true);
             //强制分配样式重新应用到控件上
             UpdateStyles();
@@ -145,7 +147,6 @@ namespace WinForm.UI.Controls
             GraphicsPathHelper.Draw(rec, e.Graphics, radius, false, BackColor);
             base.OnPaint(e);
             Graphics g = e.Graphics;
-
             if (_animationManager.IsAnimating())
             {
                 g.SmoothingMode = SmoothingMode.AntiAlias;
@@ -160,11 +161,13 @@ namespace WinForm.UI.Controls
                 }
                 g.SmoothingMode = SmoothingMode.None;
             }
-
+            
             DrawImage(e.Graphics);
             DrawText(e.Graphics);
-
+            
         }
+
+
 
         private void DrawImage(Graphics g)
         {
@@ -283,6 +286,21 @@ namespace WinForm.UI.Controls
             };
         }
 
+
+
+
+        protected override void WndProc(ref Message m)
+        {
+            //if(m.Msg== 0x0202)
+            //{
+            //    OnMouseUp();
+            //    return;
+            //}
+
+            base.WndProc(ref m);
+
+
+        }
 
 
         public void PerformClick()

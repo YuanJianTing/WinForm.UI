@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common.cs" />
     <Compile Include="Entity\Contart.cs" />
     <Compile Include="Entity\RContact.cs" />
     <Compile Include="Entity\TradeBean.cs" />
@@ -72,6 +71,12 @@
     <Compile Include="TableForm.Designer.cs">
       <DependentUpon>TableForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TempForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TempForm.Designer.cs">
+      <DependentUpon>TempForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ListViewForm.resx">
       <DependentUpon>ListViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +95,9 @@
     </Compile>
     <EmbeddedResource Include="TableForm.resx">
       <DependentUpon>TableForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TempForm.resx">
+      <DependentUpon>TempForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

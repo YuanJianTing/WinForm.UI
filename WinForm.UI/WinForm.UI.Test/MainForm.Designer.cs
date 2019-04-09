@@ -65,7 +65,7 @@ namespace WinForm.UI.Test
             // 
             // fButton2
             // 
-            this.fButton2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.fButton2.BackColor = System.Drawing.Color.DimGray;
             this.fButton2.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.fButton2.ForeColor = System.Drawing.Color.White;
             this.fButton2.Location = new System.Drawing.Point(151, 61);
