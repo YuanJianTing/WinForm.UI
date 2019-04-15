@@ -20,5 +20,3 @@ private SimpleArrayAdapter adapter;
 ![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/listview.png)
 ## Table
 ![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/table.png)
-## 错误提示
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/tishi.png)
