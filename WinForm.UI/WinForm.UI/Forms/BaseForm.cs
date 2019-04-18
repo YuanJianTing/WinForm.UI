@@ -187,6 +187,8 @@ namespace WinForm.UI.Forms
             get { return animation; }
             set
             {
+                if (value == null)
+                    return;
                 animation = value;
                 animation.SetForm(this);
             }
