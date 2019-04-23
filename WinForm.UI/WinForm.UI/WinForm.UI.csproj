@@ -52,9 +52,10 @@
     <Compile Include="Controls\FErrorProvider.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\LoadingView.cs">
+    <Compile Include="Controls\Loading.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\LoadingDot.cs" />
     <Compile Include="Controls\SimpleObjectAdapter.cs" />
     <Compile Include="Forms\DialogForm.cs">
       <SubType>Form</SubType>

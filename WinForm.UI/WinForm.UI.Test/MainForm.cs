@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinForm.UI.Animations;
 using WinForm.UI.Controls;
@@ -64,7 +66,17 @@ namespace WinForm.UI.Test
 
         private void fButton6_Click(object sender, EventArgs e)
         {
-            newLoadingView1.Enabled = (!newLoadingView1.Enabled);
+            //newLoadingView1.Enabled = (!newLoadingView1.Enabled);
+
+            Loading loading= Loading.ShowLoading(this);
+            new Task(()=> {
+                Thread.Sleep(3000);
+
+                this.Invoke((EventHandler)delegate {
+                    Loading.StopLoading(loading);
+                });
+
+            }).Start();
         }
     }
 }

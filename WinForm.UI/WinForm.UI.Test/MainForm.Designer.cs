@@ -45,7 +45,6 @@ namespace WinForm.UI.Test
             this.fButton6 = new WinForm.UI.Controls.FButton();
             this.circlePictureBox2 = new WinForm.UI.Controls.CirclePictureBox();
             this.circlePictureBox1 = new WinForm.UI.Controls.CirclePictureBox();
-            this.newLoadingView1 = new WinForm.UI.Controls.LoadingView();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).BeginInit();
@@ -157,11 +156,11 @@ namespace WinForm.UI.Test
             this.fButton6.BackColor = System.Drawing.Color.Black;
             this.fButton6.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.fButton6.ForeColor = System.Drawing.Color.White;
-            this.fButton6.Location = new System.Drawing.Point(190, 171);
+            this.fButton6.Location = new System.Drawing.Point(26, 196);
             this.fButton6.Name = "fButton6";
             this.fButton6.Size = new System.Drawing.Size(98, 36);
             this.fButton6.TabIndex = 13;
-            this.fButton6.Text = "开 始";
+            this.fButton6.Text = "loading";
             this.fButton6.Click += new System.EventHandler(this.fButton6_Click);
             // 
             // circlePictureBox2
@@ -192,15 +191,6 @@ namespace WinForm.UI.Test
             this.circlePictureBox1.TabStop = false;
             this.circlePictureBox1.Click += new System.EventHandler(this.circlePictureBox1_Click);
             // 
-            // newLoadingView1
-            // 
-            this.newLoadingView1.Enabled = false;
-            this.newLoadingView1.Location = new System.Drawing.Point(435, 250);
-            this.newLoadingView1.Name = "newLoadingView1";
-            this.newLoadingView1.Size = new System.Drawing.Size(134, 134);
-            this.newLoadingView1.TabIndex = 16;
-            this.newLoadingView1.Text = "newLoadingView1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -208,7 +198,6 @@ namespace WinForm.UI.Test
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(832, 513);
             this.ContextMenuStrip = this.contextMenuStrip1;
-            this.Controls.Add(this.newLoadingView1);
             this.Controls.Add(this.circlePictureBox2);
             this.Controls.Add(this.fButton6);
             this.Controls.Add(this.fButton5);
@@ -246,7 +235,6 @@ namespace WinForm.UI.Test
         private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem;
         private Controls.FButton fButton6;
         private Controls.CirclePictureBox circlePictureBox2;
-        private Controls.LoadingView newLoadingView1;
     }
 }
 
