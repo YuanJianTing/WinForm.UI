@@ -50,6 +50,18 @@
     <Compile Include="Entity\Contart.cs" />
     <Compile Include="Entity\RContact.cs" />
     <Compile Include="Entity\TradeBean.cs" />
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FragmentForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FragmentForm.Designer.cs">
+      <DependentUpon>FragmentForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListViewAdapter.cs" />
     <Compile Include="ListViewForm.cs">
       <SubType>Form</SubType>
@@ -77,6 +89,18 @@
     <Compile Include="TempForm.Designer.cs">
       <DependentUpon>TempForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserFragment.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserFragment.Designer.cs">
+      <DependentUpon>UserFragment.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FragmentForm.resx">
+      <DependentUpon>FragmentForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListViewForm.resx">
       <DependentUpon>ListViewForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TempForm.resx">
       <DependentUpon>TempForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserFragment.resx">
+      <DependentUpon>UserFragment.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -78,5 +78,12 @@ namespace WinForm.UI.Test
 
             }).Start();
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.Location = new Point(10,10);
+            Console.WriteLine(StartPosition);
+            Console.WriteLine();
+        }
     }
 }

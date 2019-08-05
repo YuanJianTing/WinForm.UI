@@ -547,7 +547,7 @@ namespace WinForm.UI.Forms
             {
                 //释放鼠标焦点捕获
                 Win32.ReleaseCapture();
-                //向当前窗体发送拖动消息
+                ////向当前窗体发送拖动消息
                 Win32.SendMessage(this.Handle, 0x0112, 0xF011, 0);
                 OnMouseUp(e);
             }

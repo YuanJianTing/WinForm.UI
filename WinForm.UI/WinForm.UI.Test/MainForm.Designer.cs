@@ -208,9 +208,10 @@ namespace WinForm.UI.Test
             this.Controls.Add(this.fButton2);
             this.Controls.Add(this.fButton1);
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form1";
             this.TitleHeight = 25;
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.circlePictureBox1)).EndInit();

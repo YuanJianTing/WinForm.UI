@@ -71,7 +71,7 @@ namespace WinForm.UI.Controls
             OnScroll(e);
         }
 
-        private int VirtualHeight, VirtualWidth = 0;
+        public int VirtualHeight, VirtualWidth = 0;
 
         #region 属性
         private BorderStyle borderStyle;
