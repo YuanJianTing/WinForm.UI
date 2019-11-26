@@ -375,6 +375,10 @@ namespace WinForm.UI.Controls
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            base.OnMouseMove(e);
+            if (chatVScroll.IsMouseOnSlider || listHScroll.IsMouseOnSlider)
+                return;
+
             m_ptMousePos = e.Location;
             m_ptMousePos.Y += chatVScroll.Value;
             //判断鼠标是否在行中
@@ -389,15 +393,29 @@ namespace WinForm.UI.Controls
                     break;
                 }
             }
-            base.OnMouseMove(e);
+           
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
         {
+            base.OnMouseClick(e);
+            if (chatVScroll.IsMouseOnSlider|| listHScroll.IsMouseOnSlider)
+                return;
             foreach (ViewHolder item in Rows)
             {
                 if (item.bounds.Contains(m_ptMousePos))
                 {
+                    if (item.CellBounds.Count > 0)
+                    {
+                        int ce = 0;
+                        foreach (var cellBound in item.CellBounds)
+                        {
+                            if (cellBound.Contains(m_ptMousePos))
+                                OnCellClick(new CellClickEventArgs(item, ce));
+                            ce++;
+                        }
+                    }
+
                     if (item == selectHolder)
                         break;
                     selectHolder = item;
@@ -406,9 +424,21 @@ namespace WinForm.UI.Controls
                     break;
                 }
             }
-            base.OnMouseClick(e);
+           
         }
 
+        //protected override void OnMouseEnter(EventArgs e)
+        //{
+        //    base.OnMouseEnter(e);
+        //    chatVScroll.Visible = true;
+        //    listHScroll.Visible = true;
+        //}
+        //protected override void OnMouseLeave(EventArgs e)
+        //{
+        //    base.OnMouseLeave(e);
+        //    chatVScroll.Visible = false;
+        //    listHScroll.Visible = false;
+        //}
         protected override void OnMouseDown(MouseEventArgs e)
         {
             this.Focus();
@@ -432,6 +462,13 @@ namespace WinForm.UI.Controls
         public virtual void OnItemClick(ItemClickEventArgs e)
         {
             ItemClick?.Invoke(this, e);
+        }
+
+        public delegate void CellClickHandler(object sender, CellClickEventArgs e);
+        public event CellClickHandler CellClick;
+        public virtual void OnCellClick(CellClickEventArgs e)
+        {
+            CellClick?.Invoke(this, e);
         }
     }
 }

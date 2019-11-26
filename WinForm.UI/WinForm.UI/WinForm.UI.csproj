@@ -60,6 +60,8 @@
     <Compile Include="Controls\VerticalScroll.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Enums\CellStyleType.cs" />
+    <Compile Include="Events\CellClickEventArgs.cs" />
     <Compile Include="Forms\DialogForm.cs">
       <SubType>Form</SubType>
     </Compile>

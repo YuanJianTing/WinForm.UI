@@ -55,9 +55,13 @@ namespace WinForm.UI.Controls
         public bool isMouseClick = false;
         public bool isMouseMove = false;
         public Point MouseLocation;
+
+        public List<Rectangle> CellBounds { private set; get; }
+
         public ViewHolder(Rectangle bounds)
         {
             this.bounds = bounds;
+            CellBounds = new List<Rectangle>();
         }
     }
 }

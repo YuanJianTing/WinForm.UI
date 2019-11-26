@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WinForm.UI.Enums;
 
 namespace WinForm.UI.Controls
 {
@@ -55,7 +56,7 @@ namespace WinForm.UI.Controls
             set { font = value; }
         }
 
-
+        public CellStyleType CellStyleType { get; set; } = CellStyleType.Text;
 
         private FTable table;
         internal FTable OwnerTable

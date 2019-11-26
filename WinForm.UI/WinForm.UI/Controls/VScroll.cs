@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinForm.UI.Controls
@@ -193,7 +194,7 @@ namespace WinForm.UI.Controls
             if (e.Delta > 0) Value -= 50;
             if (e.Delta < 0) Value += 50;
         }
-        
+
 
         private void Owner_Click(object sender, EventArgs e)
         {
