@@ -6,17 +6,15 @@ WinForm 皮肤，自定义控件
 public partial class MainForm : BaseForm //修改父类 Form 为 BaseForm
 ```
 ###### Table ：
+#### table支持列、行 拖动；执行点击标题排序；
+#### 当数据源更改时，需调用以下方法：
 ```C#
-//默认提供两种适配器
-private SimpleObjectAdapter<TradeBean> adapter;
-private SimpleArrayAdapter adapter;
-```
+table.NotifyDataSetChanged();
 
 ## 效果图：
-### Form
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/form.png)
+### Form 、RecyclerView、TreeView
+![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182209.png)
 
-## ListView
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/listview.png)
 ## Table
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/WinForm.UI.Test/screenshot/table.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182243.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182258.png)
