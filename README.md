@@ -10,6 +10,7 @@ public partial class MainForm : BaseForm //修改父类 Form 为 BaseForm
 #### 当数据源更改时，需调用以下方法：
 ```C#
 table.NotifyDataSetChanged();
+```
 
 ## 效果图：
 ### Form 、RecyclerView、TreeView
