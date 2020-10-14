@@ -14,8 +14,8 @@ table.NotifyDataSetChanged();
 
 ## 效果图：
 ### Form 、RecyclerView、TreeView
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182209.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/tree/master/screenshot/20201014182209.png)
 
 ## Table
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182243.png)
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/WinForm.UI/screenshot/20201014182258.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/tree/master/screenshot/20201014182243.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/tree/master/screenshot/20201014182258.png)
