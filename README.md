@@ -46,8 +46,8 @@ public class ContactsAdapter : BaseAdapter<ContactsViewModel>{
 
 ## 效果图：
 ### Form 、RecyclerView、TreeView
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/screenshot/20201014182209.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/raw/master/screenshot/20201014182209.png)
 
 ## Table
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/screenshot/20201014182243.png)
-![image](https://github.com/YuanJianTing/WinForm.UI/blob/master/screenshot/20201014182258.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/raw/master/screenshot/20201014182243.png)
+![image](https://github.com/YuanJianTing/WinForm.UI/raw/master/screenshot/20201014182258.png)
