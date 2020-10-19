@@ -22,7 +22,8 @@ namespace WinForm.UI.Controls
         private static readonly object _eventColumnDragChanged = new object();
         private static readonly object _eventRowDragChanged = new object();
         private static readonly object _eventSortClick = new object();
-        private static readonly object _eventSelectionChange = new object();
+        private static readonly object _eventSelectionChanged = new object();
+        private static readonly object _eventScrollChanged = new object();
         #endregion
 
         #region Fields
@@ -32,8 +33,8 @@ namespace WinForm.UI.Controls
         private HScroll _hScroll;    //滚动条
         private bool _MouseVisible;
         private TableColumnCollection _tableColumns;
-        private int headerHeight = 40;
         private int columnHeight = 40;
+        private int rowHeight = 40;
         private IList dataSource;
         private List<RectangleF> _rows;
         private Point m_MouseDownPos;//鼠标按下的位置
@@ -141,19 +142,19 @@ namespace WinForm.UI.Controls
             get { return _tableColumns; }
         }
 
-        [DefaultValue(typeof(BorderStyle), "40")]
+        [DefaultValue(40)]
         [Description("获取或设置标题栏高"), Category("Header")]
-        public int HeaderHeight
-        {
-            get { return headerHeight; }
-            set { headerHeight = value; }
-        }
-        [DefaultValue(typeof(int), "40")]
-        [Description("获取或设置表格列高")]
         public int ColumnHeight
         {
             get { return columnHeight; }
-            set { if (columnHeight == value) return; columnHeight = value; this.Invalidate(); }
+            set { columnHeight = value; }
+        }
+        [DefaultValue(40)]
+        [Description("获取或设置表格的行高")]
+        public int RowHeight
+        {
+            get { return rowHeight; }
+            set { if (rowHeight == value) return; rowHeight = value; this.Invalidate(); }
         }
         [DefaultValue(false)]
         [Description("获取或设置是否允许拖动调整列的位置")]
@@ -199,38 +200,76 @@ namespace WinForm.UI.Controls
         #endregion
 
         #region Events
-        [Category("Action")]
+        [Category("Action"), Description("当用户拖动调整列的位置时发生")]
         public event EventHandler ColumnDragChanged
         {
             add { this.Events.AddHandler(_eventColumnDragChanged, value); }
             remove { this.Events.RemoveHandler(_eventColumnDragChanged, value); }
         }
-        [Category("Action")]
+        [Category("Action"), Description("当用户拖动调整行的位置时发生")]
         public event EventHandler RowDragChanged
         {
             add { this.Events.AddHandler(_eventRowDragChanged, value); }
             remove { this.Events.RemoveHandler(_eventRowDragChanged, value); }
         }
-        [Category("Action")]
+        [Category("Action"), Description("当用户点击标题触发排序时发生")]
         public event EventHandler<TableColumnSortEventArgs> SortClick
         {
             add { this.Events.AddHandler(_eventSortClick, value); }
             remove { this.Events.RemoveHandler(_eventSortClick, value); }
         }
-        [Category("Action")]
-        public event EventHandler<TableSelectionChangeEventArgs> SelectionChange
+        [Category("Action"), Description("当用户选中某行时发生")]
+        public event EventHandler<TableSelectionChangeEventArgs> SelectionChanged
         {
-            add { this.Events.AddHandler(_eventSelectionChange, value); }
-            remove { this.Events.RemoveHandler(_eventSelectionChange, value); }
+            add { this.Events.AddHandler(_eventSelectionChanged, value); }
+            remove { this.Events.RemoveHandler(_eventSelectionChanged, value); }
+        }
+        [Category("Action"), Description("当控件的滚动条发生更改时")]
+        public event EventHandler<ScrollEventArgs> ScrollChanged
+        {
+            add { this.Events.AddHandler(_eventScrollChanged, value); }
+            remove { this.Events.RemoveHandler(_eventScrollChanged, value); }
+        }
+        protected virtual void OnColumnDragChanged(EventArgs e)
+        {
+            EventHandler handler;
+            handler = (EventHandler)this.Events[_eventColumnDragChanged];
+            handler?.Invoke(this, e);
+        }
+        protected virtual void OnRowDragChanged(EventArgs e)
+        {
+            EventHandler handler;
+            handler = (EventHandler)this.Events[_eventRowDragChanged];
+            handler?.Invoke(this, e);
+        }
+        protected virtual void OnSortClick(TableColumnSortEventArgs e)
+        {
+            EventHandler<TableColumnSortEventArgs> handler;
+            handler = (EventHandler<TableColumnSortEventArgs>)this.Events[_eventSortClick];
+            handler?.Invoke(this, e);
+        }
+        protected virtual void OnSelectionChanged(TableSelectionChangeEventArgs e)
+        {
+            EventHandler<TableSelectionChangeEventArgs> handler;
+            handler = (EventHandler<TableSelectionChangeEventArgs>)this.Events[_eventSelectionChanged];
+            handler?.Invoke(this, e);
+        }
+        protected virtual void OnScrollChanged(ScrollEventArgs e)
+        {
+            EventHandler<ScrollEventArgs> handler;
+            handler = (EventHandler<ScrollEventArgs>)this.Events[_eventScrollChanged];
+            handler?.Invoke(this, e);
         }
         #endregion
 
+        #region Methods
         protected override void OnCreateControl()
         {
             base.OnCreateControl();
             ResetColumns();
         }
 
+        #region Draw
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -248,24 +287,24 @@ namespace WinForm.UI.Controls
 
             if (DataSource != null)
             {
-                e.Graphics.TranslateClip(0, columnHeight);//平移 绕过 标题
+                e.Graphics.TranslateClip(0, ColumnHeight);//平移 绕过 标题
 
                 using (SolidBrush solidBrush = new SolidBrush(this.ForeColor))
                 {
                     Pen pen = new Pen(BorderColor);
                     string value = string.Empty;
-                    float y = HeaderHeight;
-                    VirtualHeight = HeaderHeight;
+                    float y = ColumnHeight;
+                    VirtualHeight = ColumnHeight;
                     int i = 0;
                     foreach (var item in DataSource)
                     {
                         DrawRow(e.Graphics, solidBrush, pen, y, item);
-                        RectangleF rectangle = new RectangleF(0, y, (this.Width > VirtualWidth) ? VirtualWidth : this.VirtualWidth, ColumnHeight);
+                        RectangleF rectangle = new RectangleF(0, y, (this.Width > VirtualWidth) ? VirtualWidth : this.VirtualWidth, RowHeight);
                         _rows.Add(rectangle);
 
-                        y += ColumnHeight;
+                        y += RowHeight;
                         e.Graphics.DrawLine(pen, 0, y, (this.Width > VirtualWidth) ? VirtualWidth : this.VirtualWidth, y);
-                        VirtualHeight += ColumnHeight;
+                        VirtualHeight += RowHeight;
 
                         if (SelectionIndex == i)
                         {
@@ -280,7 +319,7 @@ namespace WinForm.UI.Controls
                         i++;
                     }
                 }
-                e.Graphics.TranslateClip(0, -columnHeight);
+                e.Graphics.TranslateClip(0, -ColumnHeight);
             }
 
             e.Graphics.ResetTransform();             //重置坐标系
@@ -318,7 +357,7 @@ namespace WinForm.UI.Controls
                     //g.DrawNoPaddingStringMiddleCenter(item.Text, item.Font, solidBrush, item.Bounds);
                     g.DrawLine(pen, item.Bounds.X, 0, item.Bounds.X, item.Bounds.Height);
                 }
-                g.DrawLine(pen, 0, HeaderHeight, (this.Width > VirtualWidth) ? VirtualWidth : this.VirtualWidth, HeaderHeight);
+                g.DrawLine(pen, 0, ColumnHeight, (this.Width > VirtualWidth) ? VirtualWidth : this.VirtualWidth, ColumnHeight);
             }
         }
 
@@ -326,13 +365,14 @@ namespace WinForm.UI.Controls
         {
             foreach (var column in TableColumns)
             {
-                RectangleF rectangle = new RectangleF(column.Bounds.X, y, column.Bounds.Width, ColumnHeight);
+                RectangleF rectangle = new RectangleF(column.Bounds.X, y, column.Bounds.Width, RowHeight);
                 solidBrush.Color = column.ForeColor;
                 string value = GetDataBindValue(column, DataBind);
                 g.DrawNoPaddingStringMiddleCenter(value, column.Font, solidBrush, rectangle);
                 g.DrawLine(pen, rectangle.X, rectangle.Y, rectangle.X, rectangle.Bottom);
             }
         }
+        #endregion
 
         #region BindData
         protected virtual string GetDataBindValue(TableColumn tableColumn, object DataBind)
@@ -382,6 +422,7 @@ namespace WinForm.UI.Controls
 
         private void VScroll_OnScrollEvent(object sender, ScrollEventArgs e)
         {
+            OnScrollChanged(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
@@ -413,7 +454,7 @@ namespace WinForm.UI.Controls
                     w = this.Width * (item.Weight / 100);
                 }
                 //w = this.Width * (item.Weight / 100);
-                item.Bounds = new RectangleF(x, 0, w, HeaderHeight);
+                item.Bounds = new RectangleF(x, 0, w, ColumnHeight);
                 x += w;
             }
             VirtualWidth = (int)x;
@@ -530,7 +571,7 @@ namespace WinForm.UI.Controls
 
             int i = 0;
 
-            if (AllowUserToResizeColumns&& m_DragRowOrColumn!=2)//调整列宽
+            if (AllowUserToResizeColumns && m_DragRowOrColumn != 2)//调整列宽
             {
                 foreach (var item in TableColumns)
                 {
@@ -576,7 +617,7 @@ namespace WinForm.UI.Controls
                         i++;
                     }
                 }
-                else  if(m_DragRowOrColumn==0)
+                else if (m_DragRowOrColumn == 0)
                 {
                     //处理行拖放
                     if (t > -1)
@@ -586,12 +627,13 @@ namespace WinForm.UI.Controls
                         this.Invalidate();
                         return;
                     }
-                }else if (m_DragRowOrColumn == 2)
+                }
+                else if (m_DragRowOrColumn == 2)
                 {
                     float w = m_MouseMovePos.X - m_MouseDownPos.X;
                     if (w == 0)
                         return;
-                    TableColumns[m_DragColumnPos].Width =(int) (TableColumns[m_DragColumnPos].Bounds.Width + w);
+                    TableColumns[m_DragColumnPos].Width = (int)(TableColumns[m_DragColumnPos].Bounds.Width + w);
                     this.ResetColumns();
                     this.Invalidate();
                     m_MouseDownPos = m_MouseMovePos;
@@ -654,7 +696,7 @@ namespace WinForm.UI.Controls
             if (_hScroll.IsMouseDown)
                 return;
 
-            if (e.Button == MouseButtons.Left && m_AfterDragPos == -1&& m_DragColumnPos == -1)
+            if (e.Button == MouseButtons.Left && m_AfterDragPos == -1 && m_DragColumnPos == -1)
             {
                 foreach (var item in TableColumns)
                 {
@@ -675,7 +717,7 @@ namespace WinForm.UI.Controls
                     if (item.Contains(m_MouseDownPos))
                     {
                         SelectionIndex = i;
-                        OnSelectionChange(new TableSelectionChangeEventArgs(SelectionIndex));
+                        OnSelectionChanged(new TableSelectionChangeEventArgs(SelectionIndex));
                         break;
                     }
                     i++;
@@ -686,38 +728,18 @@ namespace WinForm.UI.Controls
 
         #endregion
 
-        protected virtual void OnColumnDragChanged(EventArgs e)
-        {
-            EventHandler handler;
-            handler = (EventHandler)this.Events[_eventColumnDragChanged];
-            handler?.Invoke(this, e);
-        }
-        protected virtual void OnRowDragChanged(EventArgs e)
-        {
-            EventHandler handler;
-            handler = (EventHandler)this.Events[_eventRowDragChanged];
-            handler?.Invoke(this, e);
-        }
-        protected virtual void OnSortClick(TableColumnSortEventArgs e)
-        {
-            EventHandler<TableColumnSortEventArgs> handler;
-            handler = (EventHandler<TableColumnSortEventArgs>)this.Events[_eventSortClick];
-            handler?.Invoke(this, e);
-        }
-        protected virtual void OnSelectionChange(TableSelectionChangeEventArgs e)
-        {
-            EventHandler<TableSelectionChangeEventArgs> handler;
-            handler = (EventHandler<TableSelectionChangeEventArgs>)this.Events[_eventSelectionChange];
-            handler?.Invoke(this, e);
-        }
 
+        #endregion
+
+        #region Public Methods
         /// <summary>
         /// 当数据源更改时，调用此方法使其重新绘制
         /// </summary>
         public void NotifyDataSetChanged()
         {
             this.Invalidate();
-        }
+        } 
+        #endregion
 
         protected override void Dispose(bool disposing)
         {
