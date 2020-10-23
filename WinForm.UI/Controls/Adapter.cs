@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinForm.UI.Controls.Emuns;
 
 namespace WinForm.UI.Controls
 {
@@ -43,6 +44,8 @@ namespace WinForm.UI.Controls
         public int Position { get; }
         public Rectangle Bounds { get; set; }
         public Control Control { get; }
+
+        public MouseState MouseState { get; set; } = MouseState.None;
 
     }
 

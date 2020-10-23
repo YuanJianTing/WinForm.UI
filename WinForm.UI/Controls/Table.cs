@@ -219,7 +219,7 @@ namespace WinForm.UI.Controls
             remove { this.Events.RemoveHandler(_eventSortClick, value); }
         }
         [Category("Action"), Description("当用户选中某行时发生")]
-        public event EventHandler<TableSelectionChangeEventArgs> SelectionChanged
+        public event EventHandler<SelectionChangeEventArgs> SelectionChanged
         {
             add { this.Events.AddHandler(_eventSelectionChanged, value); }
             remove { this.Events.RemoveHandler(_eventSelectionChanged, value); }
@@ -248,10 +248,10 @@ namespace WinForm.UI.Controls
             handler = (EventHandler<TableColumnSortEventArgs>)this.Events[_eventSortClick];
             handler?.Invoke(this, e);
         }
-        protected virtual void OnSelectionChanged(TableSelectionChangeEventArgs e)
+        protected virtual void OnSelectionChanged(SelectionChangeEventArgs e)
         {
-            EventHandler<TableSelectionChangeEventArgs> handler;
-            handler = (EventHandler<TableSelectionChangeEventArgs>)this.Events[_eventSelectionChanged];
+            EventHandler<SelectionChangeEventArgs> handler;
+            handler = (EventHandler<SelectionChangeEventArgs>)this.Events[_eventSelectionChanged];
             handler?.Invoke(this, e);
         }
         protected virtual void OnScrollChanged(ScrollEventArgs e)
@@ -717,7 +717,7 @@ namespace WinForm.UI.Controls
                     if (item.Contains(m_MouseDownPos))
                     {
                         SelectionIndex = i;
-                        OnSelectionChanged(new TableSelectionChangeEventArgs(SelectionIndex));
+                        OnSelectionChanged(new SelectionChangeEventArgs(SelectionIndex));
                         break;
                     }
                     i++;
@@ -760,9 +760,9 @@ namespace WinForm.UI.Controls
 
         public TableColumn TableColumn { get; private set; }
     }
-    public class TableSelectionChangeEventArgs : EventArgs
+    public class SelectionChangeEventArgs : EventArgs
     {
-        public TableSelectionChangeEventArgs(int position)
+        public SelectionChangeEventArgs(int position)
         {
             this.RowIndex = position;
         }

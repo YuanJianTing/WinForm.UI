@@ -49,6 +49,22 @@ namespace FormsApp.Adapters
             ContactsViewModel viewModel = GetItem(position);
             Rectangle Bounds = viewHolder.Bounds;
 
+            switch (viewHolder.MouseState)
+            {
+                case WinForm.UI.Controls.Emuns.MouseState.None:
+                    break;
+                case WinForm.UI.Controls.Emuns.MouseState.MouseSelected:
+                    using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(50, Color.White)))
+                        g.FillRectangle(solidBrush, Bounds);
+                    break;
+                case WinForm.UI.Controls.Emuns.MouseState.MouseMove:
+                    using (SolidBrush solidBrush = new SolidBrush(Color.FromArgb(70,Color.White)))
+                        g.FillRectangle(solidBrush, Bounds);
+                    break;
+                default:
+                    break;
+            }
+
             LoadAsyncImage(g, viewHolder, viewModel.HeadUrl);
 
             using (SolidBrush solidBrush = new SolidBrush(ColorStyles.ForeColor))

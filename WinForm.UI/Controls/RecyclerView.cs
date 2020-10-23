@@ -14,6 +14,10 @@ namespace WinForm.UI.Controls
 {
     public class RecyclerView : BorderPanel
     {
+        #region Constants
+        private static readonly object _eventSelectionChanged = new object();
+        #endregion
+
         #region Fields
         private Orientation _orientation = Orientation.Vertical;
         private int VirtualHeight = 0;
@@ -23,6 +27,8 @@ namespace WinForm.UI.Controls
         private bool _MouseVisible;
         private AnimationManager _animationManager;
         private ViewHolder _clickViewHolder;
+        private int _MoveHolderIndex = -1;
+        private int _SelectedHolderIndex = -1;
         #endregion
 
         #region Constructors
@@ -90,7 +96,38 @@ namespace WinForm.UI.Controls
         [Bindable(false), Browsable(false)]
         public Adapter<ViewHolder> Adapter { get { return _adapter; } set { _adapter = value; if (_adapter != null) _adapter.Control = this; } }
 
+        [Bindable(false), Browsable(false)]
+        public int SelectedIndex
+        {
+            get { return _SelectedHolderIndex; }
+            set
+            {
+                if (_SelectedHolderIndex == value) return; _SelectedHolderIndex = value;
+                this.Invalidate();
+                OnSelectionChanged(new SelectionChangeEventArgs(_SelectedHolderIndex)); 
+            }
+        }
+
         #endregion
+
+        #region Events
+        [Category("Action"), Description("当用户选中某行时发生")]
+        public event EventHandler<SelectionChangeEventArgs> SelectionChanged
+        {
+            add { this.Events.AddHandler(_eventSelectionChanged, value); }
+            remove { this.Events.RemoveHandler(_eventSelectionChanged, value); }
+        }
+
+        protected virtual void OnSelectionChanged(SelectionChangeEventArgs e)
+        {
+            EventHandler<SelectionChangeEventArgs> handler;
+            handler = (EventHandler<SelectionChangeEventArgs>)this.Events[_eventSelectionChanged];
+            handler?.Invoke(this, e);
+        }
+
+        #endregion
+
+
 
         protected override void OnPaint(PaintEventArgs e)
         {
@@ -99,7 +136,7 @@ namespace WinForm.UI.Controls
                 return;
             VirtualHeight = 0;
             VirtualWidth = 0;
-            
+
 
             if (_animationManager.IsAnimating() && _clickViewHolder != null)
             {
@@ -152,8 +189,15 @@ namespace WinForm.UI.Controls
         {
             base.OnMouseLeave(e);
             _MouseVisible = false;
-            if (!_animationManager.IsAnimating())
-                this.Invalidate();
+            int count = Adapter.GetItemCount();
+            for (int i = 0; i < count; i++)
+            {
+                ViewHolder viewHolder = Adapter.OnCreateViewHolder(this, -_vScroll.Value, i);
+                if (viewHolder.MouseState == Emuns.MouseState.MouseSelected)
+                    continue;
+                viewHolder.MouseState = Emuns.MouseState.None;
+            }
+            this.Invalidate();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -168,12 +212,33 @@ namespace WinForm.UI.Controls
             }
         }
 
-        //protected override void OnMouseMove(MouseEventArgs e)
-        //{
-        //    base.OnMouseMove(e);
-        //    m_ptMousePos = e.Location;
-        //    m_ptMousePos.Y += _vScroll.Value;
-        //}
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+            if (_vScroll.IsMouseDown)
+                return;
+
+            int count = Adapter.GetItemCount();
+            int t = 0;
+            for (int i = 0; i < count; i++)
+            {
+                ViewHolder holder = Adapter.OnCreateViewHolder(this, -_vScroll.Value, i);
+                if (holder.MouseState == Emuns.MouseState.MouseSelected)
+                    continue;
+                if (holder.Bounds.Contains(e.Location))
+                {
+                    holder.MouseState = Emuns.MouseState.MouseMove;
+                    t = i;
+                }
+                else
+                {
+                    holder.MouseState = Emuns.MouseState.None;
+                }
+            }
+            if (_MoveHolderIndex == t)
+                return;
+            this.Invalidate();
+        }
 
 
         protected override void OnMouseUp(MouseEventArgs e)
@@ -181,18 +246,36 @@ namespace WinForm.UI.Controls
             base.OnMouseUp(e);
             if (DesignMode)
                 return;
-
+            _MoveHolderIndex = -1;
+            _SelectedHolderIndex = -1;
             if (_vScroll.IsMouseDown)
                 return;
         }
 
-        //protected override void OnMouseClick(MouseEventArgs e)
-        //{
-        //    base.OnMouseClick(e);
-        //    if (_vScroll.IsMouseDown)
-        //        return;
-        //    MouseNodeClick(Nodes);
-        //}
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            if (_vScroll.IsMouseDown)
+                return;
+            int p = 0;
+            int count = Adapter.GetItemCount();
+            for (int i = 0; i < count; i++)
+            {
+                ViewHolder holder = Adapter.OnCreateViewHolder(this, -_vScroll.Value, i);
+                //if (holder.MouseState == Emuns.MouseState.MouseSelected)
+                //    continue;
+                if (holder.Bounds.Contains(e.Location))
+                {
+                    holder.MouseState = Emuns.MouseState.MouseSelected;
+                    p = i;
+                }
+                else
+                {
+                    holder.MouseState = Emuns.MouseState.None;
+                }
+            }
+            SelectedIndex = p;
+        }
 
         private ViewHolder FindPointView(Point point)
         {

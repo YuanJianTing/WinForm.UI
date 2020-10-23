@@ -11,6 +11,13 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <PackageId>Winform.UI</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>yuanjianting</Authors>
+    <Description>for the first upload to github packages</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/YuanJianTing/WinForm.UI</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +61,10 @@
     </Compile>
     <Compile Include="Controls\Converters\TableColumnConverter.cs" />
     <Compile Include="Controls\Emuns\DataType.cs" />
+    <Compile Include="Controls\Emuns\MouseState.cs" />
+    <Compile Include="Controls\TextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\GroupBoxView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -94,6 +105,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="nuget.config" />
     <None Include="Resources\ImageCloseIcon.png" />
   </ItemGroup>
   <ItemGroup>
