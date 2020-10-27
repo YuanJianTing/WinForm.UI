@@ -51,7 +51,7 @@ namespace WinForm.UI.Controls
         private bool m_AllowUserToResizeColumns;
         private int m_SelectionIndex = -1;
         private int m_MouseMoveIndex = -1;
-
+        private MouseIntent m_MouseIntent = MouseIntent.None;
         #endregion
 
         #region Constructors
@@ -322,6 +322,19 @@ namespace WinForm.UI.Controls
                 e.Graphics.TranslateClip(0, -ColumnHeight);
             }
 
+            if (m_DragRowOrColumn == 0)
+            {
+                if (m_MousePreview != null)
+                {
+                    e.Graphics.DrawImage(m_MousePreview, m_MouseMovePos.X - m_MouseDownOffset.X, m_MouseMovePos.Y - m_MouseDownOffset.Y);
+                }
+                //绘制预插入的位置
+                if (!m_Prepare.IsEmpty)
+                {
+                    e.Graphics.DrawRectangle(Pens.Black, m_Prepare.X - 0.5f, m_Prepare.Y, m_Prepare.Width + 0.5f, m_Prepare.Height);
+                    e.Graphics.FillRectangle(Brushes.White, m_Prepare);
+                }
+            }
             e.Graphics.ResetTransform();             //重置坐标系
 
             _vScroll.VirtualHeight = VirtualHeight;   //绘制完成计算虚拟高度决定是否绘制滚动条
@@ -332,17 +345,20 @@ namespace WinForm.UI.Controls
             if (_MouseVisible && _hScroll.Visible)
                 _hScroll.ReDrawScroll(e.Graphics);
 
-            if (m_MousePreview != null)
-            {
-                e.Graphics.DrawImage(m_MousePreview, m_MouseMovePos.X - m_MouseDownOffset.X, m_MouseMovePos.Y - m_MouseDownOffset.Y);
-            }
-            //绘制预插入的位置
-            if (!m_Prepare.IsEmpty)
-            {
-                e.Graphics.DrawRectangle(Pens.Black, m_Prepare.X - 0.5f, m_Prepare.Y, m_Prepare.Width + 0.5f, m_Prepare.Height);
-                e.Graphics.FillRectangle(Brushes.White, m_Prepare);
-            }
 
+            if (m_DragRowOrColumn == 1)
+            {
+                if (m_MousePreview != null)
+                {
+                    e.Graphics.DrawImage(m_MousePreview, m_MouseMovePos.X - m_MouseDownOffset.X, m_MouseMovePos.Y - m_MouseDownOffset.Y);
+                }
+                //绘制预插入的位置
+                if (!m_Prepare.IsEmpty)
+                {
+                    e.Graphics.DrawRectangle(Pens.Black, m_Prepare.X - 0.5f, m_Prepare.Y, m_Prepare.Width + 0.5f, m_Prepare.Height);
+                    e.Graphics.FillRectangle(Brushes.White, m_Prepare);
+                }
+            }
         }
 
 
@@ -505,7 +521,7 @@ namespace WinForm.UI.Controls
                     i = 0;
                     foreach (var item in TableColumns)
                     {
-                        if (item.Bounds.Contains(m_MouseDownPos))
+                        if (item.Bounds.Contains(e.Location))
                         {
                             m_DragRowOrColumn = 1;
                             m_MousePreview?.Dispose();
@@ -518,7 +534,7 @@ namespace WinForm.UI.Controls
                             }
                             m_BeforeDragPos = i;
                             m_MouseDownOffset = new PointF(m_MouseDownPos.X - item.Bounds.X, m_MouseDownPos.Y - item.Bounds.Y);
-
+                            m_MouseIntent = MouseIntent.MouseDown;
                             return;
                         }
                         i++;
@@ -546,6 +562,7 @@ namespace WinForm.UI.Controls
                             }
                             m_BeforeDragPos = i;
                             m_MouseDownOffset = new PointF(m_MouseDownPos.X - item.X, m_MouseDownPos.Y - item.Y);
+                            m_MouseIntent = MouseIntent.MouseDown;
                             return;
                         }
                         i++;
@@ -562,7 +579,7 @@ namespace WinForm.UI.Controls
                 return;
             m_MouseMovePos = e.Location;
             m_MouseMovePos.X += _hScroll.Value;
-            m_MouseMovePos.Y += _vScroll.Value;
+            m_MouseMovePos.Y+= _vScroll.Value;
 
             if (_vScroll.IsMouseDown)
                 return;
@@ -576,10 +593,11 @@ namespace WinForm.UI.Controls
                 foreach (var item in TableColumns)
                 {
                     RectangleF temp = new RectangleF(item.Bounds.Right - 2, 0, 4, item.Bounds.Height);
-                    if (temp.Contains(m_MouseMovePos))
+                    if (temp.Contains(e.Location))
                     {
                         this.Cursor = Cursors.SizeWE;
                         m_DragColumnPos = i;
+                        m_MouseIntent = MouseIntent.PressMove;
                         return;
                     }
                     i++;
@@ -607,10 +625,11 @@ namespace WinForm.UI.Controls
                 {
                     foreach (var item in TableColumns)
                     {
-                        if (item.Bounds.Contains(m_MouseMovePos))
+                        if (item.Bounds.Contains(e.Location))
                         {
                             m_Prepare = new RectangleF(item.Bounds.Location, new SizeF(2, item.Bounds.Height));
                             m_AfterDragPos = i;
+                            m_MouseIntent = MouseIntent.PressMove;
                             this.Invalidate();
                             return;
                         }
@@ -623,7 +642,9 @@ namespace WinForm.UI.Controls
                     if (t > -1)
                     {
                         m_Prepare = new RectangleF(_rows[t].Location, new SizeF(100, 2));
+                        //m_Prepare = new RectangleF(m_MouseMovePos, new SizeF(100, 2));
                         m_AfterDragPos = t;
+                        m_MouseIntent = MouseIntent.PressMove;
                         this.Invalidate();
                         return;
                     }
@@ -637,6 +658,7 @@ namespace WinForm.UI.Controls
                     this.ResetColumns();
                     this.Invalidate();
                     m_MouseDownPos = m_MouseMovePos;
+                    m_MouseIntent = MouseIntent.PressMove;
                     return;
                     //Console.WriteLine(m_DragColumnPos);
                 }
@@ -663,6 +685,7 @@ namespace WinForm.UI.Controls
                     TableColumns.Transposition(m_BeforeDragPos, m_AfterDragPos);
                     ResetColumns();
                     OnColumnDragChanged(EventArgs.Empty);
+                    m_MouseIntent = MouseIntent.None;
                 }
                 else
                 {
@@ -671,8 +694,15 @@ namespace WinForm.UI.Controls
                     dataSource.Remove(temp);
                     dataSource.Insert(m_AfterDragPos, temp);
                     OnRowDragChanged(EventArgs.Empty);
+                    m_MouseIntent = MouseIntent.None;
                 }
             }
+
+            int tempIndex = m_BeforeDragPos;
+            int tempDrag = m_DragRowOrColumn;
+            MouseIntent tempIntent = m_MouseIntent;
+
+            m_MouseIntent = MouseIntent.None;
             m_DragRowOrColumn = -1;
             m_DragColumnPos = -1;
             m_AfterDragPos = -1;
@@ -686,21 +716,83 @@ namespace WinForm.UI.Controls
                 m_MousePreview = null;
                 this.Invalidate();
             }
+
+
+            switch (tempIntent)
+            {
+                case MouseIntent.None://判断按下位置
+                    HandleEvent(e);
+                    break;
+                case MouseIntent.MouseDown://按下触发 点击事件
+                    //判断按下位置为行/标题
+                    if (tempDrag == 1 && tempIndex > -1)
+                    {
+                        //按下位置为 标题行
+                        TableColumn item = TableColumns[tempIndex];
+                        if (!item.SortColumn)
+                            return;
+                        item.Desc = !item.Desc;
+                        OnSortClick(new TableColumnSortEventArgs(item));
+                    }
+                    else
+                    {
+                        SelectionIndex = tempIndex;
+                        OnSelectionChanged(new SelectionChangeEventArgs(tempIndex));
+                    }
+                    break;
+                case MouseIntent.PressMove:
+                    break;
+                default:
+                    break;
+            }
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            base.OnMouseClick(e);
-            if (_vScroll.IsMouseDown)
-                return;
-            if (_hScroll.IsMouseDown)
-                return;
+        //protected override void OnMouseClick(MouseEventArgs e)
+        //{
+        //    base.OnMouseClick(e);
+        //    if (_vScroll.IsMouseDown)
+        //        return;
+        //    if (_hScroll.IsMouseDown)
+        //        return;
 
+        //    if (e.Button == MouseButtons.Left && m_AfterDragPos == -1 && m_DragColumnPos == -1)
+        //    {
+        //        foreach (var item in TableColumns)
+        //        {
+        //            if (item.Bounds.Contains(e.Location))
+        //            {
+        //                if (!item.SortColumn)
+        //                    return;
+        //                item.Desc = !item.Desc;
+        //                this.Invalidate(Rectangle.Round(item.Bounds));
+        //                OnSortClick(new TableColumnSortEventArgs(item));
+        //                return;
+        //            }
+        //        }
+        //        //OnSelectionChange
+        //        int i = 0;
+        //        foreach (var item in _rows)
+        //        {
+        //            if (item.Contains(m_MouseDownPos))
+        //            {
+        //                SelectionIndex = i;
+        //                OnSelectionChanged(new SelectionChangeEventArgs(SelectionIndex));
+        //                break;
+        //            }
+        //            i++;
+        //        }
+        //    }
+
+        //}
+
+
+        private void HandleEvent(MouseEventArgs e)
+        {
             if (e.Button == MouseButtons.Left && m_AfterDragPos == -1 && m_DragColumnPos == -1)
             {
                 foreach (var item in TableColumns)
                 {
-                    if (item.Bounds.Contains(m_MouseDownPos))
+                    if (item.Bounds.Contains(e.Location))
                     {
                         if (!item.SortColumn)
                             return;
@@ -723,7 +815,6 @@ namespace WinForm.UI.Controls
                     i++;
                 }
             }
-
         }
 
         #endregion
@@ -738,7 +829,7 @@ namespace WinForm.UI.Controls
         public void NotifyDataSetChanged()
         {
             this.Invalidate();
-        } 
+        }
         #endregion
 
         protected override void Dispose(bool disposing)
@@ -768,6 +859,13 @@ namespace WinForm.UI.Controls
         }
 
         public int RowIndex { get; private set; }
+    }
+
+    public enum MouseIntent
+    {
+        None,
+        MouseDown,//按下
+        PressMove //按下并移动
     }
 
 }
