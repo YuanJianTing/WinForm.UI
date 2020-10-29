@@ -794,11 +794,12 @@ namespace WinForm.UI.Controls
                 {
                     if (item.Bounds.Contains(e.Location))
                     {
-                        if (!item.SortColumn)
-                            return;
-                        item.Desc = !item.Desc;
-                        this.Invalidate(Rectangle.Round(item.Bounds));
-                        OnSortClick(new TableColumnSortEventArgs(item));
+                        //注释掉以解决拖拽列时，触发点击排序事件。
+                        //if (!item.SortColumn)
+                        //    return;
+                        //item.Desc = !item.Desc;
+                        //this.Invalidate(Rectangle.Round(item.Bounds));
+                        //OnSortClick(new TableColumnSortEventArgs(item));
                         return;
                     }
                 }
