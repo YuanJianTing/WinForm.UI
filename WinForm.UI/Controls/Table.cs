@@ -685,7 +685,7 @@ namespace WinForm.UI.Controls
                     TableColumns.Transposition(m_BeforeDragPos, m_AfterDragPos);
                     ResetColumns();
                     OnColumnDragChanged(EventArgs.Empty);
-                    m_MouseIntent = MouseIntent.None;
+                    //m_MouseIntent = MouseIntent.None;
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace WinForm.UI.Controls
                     dataSource.Remove(temp);
                     dataSource.Insert(m_AfterDragPos, temp);
                     OnRowDragChanged(EventArgs.Empty);
-                    m_MouseIntent = MouseIntent.None;
+                    //m_MouseIntent = MouseIntent.None;
                 }
             }
 
@@ -747,43 +747,7 @@ namespace WinForm.UI.Controls
             }
         }
 
-        //protected override void OnMouseClick(MouseEventArgs e)
-        //{
-        //    base.OnMouseClick(e);
-        //    if (_vScroll.IsMouseDown)
-        //        return;
-        //    if (_hScroll.IsMouseDown)
-        //        return;
 
-        //    if (e.Button == MouseButtons.Left && m_AfterDragPos == -1 && m_DragColumnPos == -1)
-        //    {
-        //        foreach (var item in TableColumns)
-        //        {
-        //            if (item.Bounds.Contains(e.Location))
-        //            {
-        //                if (!item.SortColumn)
-        //                    return;
-        //                item.Desc = !item.Desc;
-        //                this.Invalidate(Rectangle.Round(item.Bounds));
-        //                OnSortClick(new TableColumnSortEventArgs(item));
-        //                return;
-        //            }
-        //        }
-        //        //OnSelectionChange
-        //        int i = 0;
-        //        foreach (var item in _rows)
-        //        {
-        //            if (item.Contains(m_MouseDownPos))
-        //            {
-        //                SelectionIndex = i;
-        //                OnSelectionChanged(new SelectionChangeEventArgs(SelectionIndex));
-        //                break;
-        //            }
-        //            i++;
-        //        }
-        //    }
-
-        //}
 
 
         private void HandleEvent(MouseEventArgs e)
