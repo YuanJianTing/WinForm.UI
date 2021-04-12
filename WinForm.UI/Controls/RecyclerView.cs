@@ -189,13 +189,16 @@ namespace WinForm.UI.Controls
         {
             base.OnMouseLeave(e);
             _MouseVisible = false;
-            int count = Adapter.GetItemCount();
-            for (int i = 0; i < count; i++)
+            if (Adapter != null)
             {
-                ViewHolder viewHolder = Adapter.OnCreateViewHolder(this, -_vScroll.Value, i);
-                if (viewHolder.MouseState == Emuns.MouseState.MouseSelected)
-                    continue;
-                viewHolder.MouseState = Emuns.MouseState.None;
+                int count = Adapter.GetItemCount();
+                for (int i = 0; i < count; i++)
+                {
+                    ViewHolder viewHolder = Adapter.OnCreateViewHolder(this, -_vScroll.Value, i);
+                    if (viewHolder.MouseState == Emuns.MouseState.MouseSelected)
+                        continue;
+                    viewHolder.MouseState = Emuns.MouseState.None;
+                }
             }
             this.Invalidate();
         }
@@ -218,6 +221,10 @@ namespace WinForm.UI.Controls
             if (_vScroll.IsMouseDown)
                 return;
 
+            if (_animationManager.IsAnimating())
+                return;
+            if (Adapter == null)
+                return;
             int count = Adapter.GetItemCount();
             int t = 0;
             for (int i = 0; i < count; i++)
@@ -256,6 +263,8 @@ namespace WinForm.UI.Controls
         {
             base.OnMouseClick(e);
             if (_vScroll.IsMouseDown)
+                return;
+            if (Adapter == null)
                 return;
             int p = 0;
             int count = Adapter.GetItemCount();

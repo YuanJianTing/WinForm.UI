@@ -105,7 +105,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nuget.config" />
     <None Include="Resources\ImageCloseIcon.png" />
   </ItemGroup>
   <ItemGroup>

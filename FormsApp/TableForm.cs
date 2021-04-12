@@ -83,5 +83,10 @@ namespace FormsApp
             table1.DataSource.AddRange( list);
             table1.NotifyDataSetChanged();
         }
+
+        private void table1_ColumnDragChanged(object sender, EventArgs e)
+        {
+            MessageBox.Show("table1_ColumnDragChanged");
+        }
     }
 }

@@ -141,6 +141,7 @@
             this.table1.TableColumns.Add(tableColumn6);
             this.table1.TableColumns.Add(tableColumn7);
             this.table1.TableColumns.Add(tableColumn8);
+            this.table1.ColumnDragChanged += new System.EventHandler(this.table1_ColumnDragChanged);
             this.table1.SortClick += new System.EventHandler<WinForm.UI.Controls.TableColumnSortEventArgs>(this.table1_SortClick);
             // 
             // button1

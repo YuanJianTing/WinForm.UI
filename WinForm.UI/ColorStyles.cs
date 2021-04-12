@@ -18,5 +18,7 @@ namespace WinForm.UI
         public static Color ScrollBackColor = Color.FromArgb(104, 104, 104);
         public static Color ScrollMouseMoveColor = Color.FromArgb(214, 219, 233);
 
+       
+
     }
 }
