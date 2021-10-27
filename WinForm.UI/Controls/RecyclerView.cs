@@ -211,6 +211,8 @@ namespace WinForm.UI.Controls
             if (e.Button == MouseButtons.Left)
             {
                 _clickViewHolder = FindPointView(e.Location);
+                if (_clickViewHolder == null)
+                    return;
                 _animationManager.StartNewAnimation(e.Location, _clickViewHolder.Bounds);
             }
         }
