@@ -20,10 +20,10 @@ namespace WinForm.UI.Forms
         private Color titleForeColor = Color.FromArgb(187, 187, 187);
         private int titleHeight = 30;
         private int titleTextOffset = 0;
+        private bool dragSize = true;
         private Rectangle closeBounds;
         private Rectangle maxBounds;
         private Rectangle minBounds;
-
         private Rectangle titleBounds;
 
 
@@ -96,6 +96,11 @@ namespace WinForm.UI.Forms
             get { return border; }
             set { border = value; this.Invalidate(); }
         }
+
+        [Category("Appearance")]
+        [Description("是否允许拖到改变大小")]
+        [DefaultValue(typeof(bool), "true")]
+        public bool DragSize { get { return dragSize; } set { dragSize = value; } }
         #endregion
 
 
@@ -135,6 +140,10 @@ namespace WinForm.UI.Forms
             base.OnSizeChanged(e);
             if (!DesignMode)
                 ResetButton();
+            if (DragSize && MouseButtons == MouseButtons.Left)
+            {
+                this.Invalidate();
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -148,6 +157,11 @@ namespace WinForm.UI.Forms
                 MouseLocationState = MouseState.MouseMin;
             else
                 MouseLocationState = MouseState.None;
+        }
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            MouseLocationState = MouseState.None;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
@@ -319,6 +333,20 @@ namespace WinForm.UI.Forms
         }
         /*窗体坐标*/
         private const long WM_GETMINMAXINFO = 0x24;
+
+        #region 拖动改变大小
+        const int HTLEFT = 10;
+        const int HTRIGHT = 11;
+        const int HTTOP = 12;
+        const int HTTOPLEFT = 13;
+        const int HTTOPRIGHT = 14;
+        const int HTBOTTOM = 15;
+        const int HTBOTTOMLEFT = 0x10;
+        const int HTBOTTOMRIGHT = 17;
+        const long WM_DRAG_SIZE = 0x0084;
+        #endregion
+
+
         private struct POINTAPI
         {
             public int x;
@@ -326,8 +354,8 @@ namespace WinForm.UI.Forms
         }
         private struct MINMAXINFO
         {
-            public POINTAPI ptReserved;
-            public POINTAPI ptMaxSize;
+            //public POINTAPI ptReserved;
+            //public POINTAPI ptMaxSize;
             public POINTAPI ptMaxPosition;
             public POINTAPI ptMinTrackSize;
             public POINTAPI ptMaxTrackSize;
@@ -373,6 +401,28 @@ namespace WinForm.UI.Forms
                 }
 
                 System.Runtime.InteropServices.Marshal.StructureToPtr(mmi, m.LParam, true);
+            }
+            else if (DragSize && m.Msg == WM_DRAG_SIZE)
+            {
+                Point vPoint = new Point((int)m.LParam & 0xFFFF,
+                           (int)m.LParam >> 16 & 0xFFFF);
+                vPoint = PointToClient(vPoint);
+                if (vPoint.X <= 5)
+                    if (vPoint.Y <= 5)
+                        m.Result = (IntPtr)HTTOPLEFT;
+                    else if (vPoint.Y >= ClientSize.Height - 5)
+                        m.Result = (IntPtr)HTBOTTOMLEFT;
+                    else m.Result = (IntPtr)HTLEFT;
+                else if (vPoint.X >= ClientSize.Width - 5)
+                    if (vPoint.Y <= 5)
+                        m.Result = (IntPtr)HTTOPRIGHT;
+                    else if (vPoint.Y >= ClientSize.Height - 5)
+                        m.Result = (IntPtr)HTBOTTOMRIGHT;
+                    else m.Result = (IntPtr)HTRIGHT;
+                else if (vPoint.Y <= 5)
+                    m.Result = (IntPtr)HTTOP;
+                else if (vPoint.Y >= ClientSize.Height - 5)
+                    m.Result = (IntPtr)HTBOTTOM;
             }
         }
         #endregion
