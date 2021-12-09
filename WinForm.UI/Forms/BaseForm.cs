@@ -354,8 +354,8 @@ namespace WinForm.UI.Forms
         }
         private struct MINMAXINFO
         {
-            //public POINTAPI ptReserved;
-            //public POINTAPI ptMaxSize;
+            public POINTAPI ptReserved;
+            public POINTAPI ptMaxSize;
             public POINTAPI ptMaxPosition;
             public POINTAPI ptMinTrackSize;
             public POINTAPI ptMaxTrackSize;
