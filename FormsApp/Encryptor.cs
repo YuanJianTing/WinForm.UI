@@ -12,7 +12,7 @@ namespace FormsApp
     /// </summary>
     public static class Encryptor
     {
-
+        //22
         #region MD5
         /// <summary>
         /// MD5
